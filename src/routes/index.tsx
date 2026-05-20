@@ -15,16 +15,6 @@ import {
 } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import LandingNav from "@/components/LandingNav";
-import Hero from "@/components/Hero";
-import LogosStrip from "@/components/LogosStrip";
-import Features from "@/components/Features";
-import DashboardPreview from "@/components/DashboardPreview";
-import Testimonials from "@/components/Testimonials";
-import Pricing from "@/components/Pricing";
-import FAQ from "@/components/FAQ";
-import CTA from "@/components/CTA";
-import Footer from "@/components/Footer";
 
 export const Route = createFileRoute("/")({
   head: () => ({
