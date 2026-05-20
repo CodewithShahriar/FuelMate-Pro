@@ -111,9 +111,6 @@ supabase/
 All tables have **Row Level Security** enabled with per-user policies. Profiles
 are auto-created via the `on_auth_user_created` trigger.
 
-## License
-
-MIT - clone, fork, and ship.
 
 ## Credit
 
