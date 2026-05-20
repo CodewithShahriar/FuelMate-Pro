@@ -9,9 +9,6 @@ A premium, AI-powered vehicle, fuel, and expense management solution.
 - 🗄️ **Supabase-ready** backend (schema + types included)
 - 📦 Runs locally with **mock data mode** out of the box
 
-> The original brief asked for Next.js 15; this project ships with TanStack
-> Start instead (same React/Tailwind/shadcn stack, file-based routing). All
-> Supabase wiring is environment-variable driven and works in either.
 
 ## Screenshots
 
