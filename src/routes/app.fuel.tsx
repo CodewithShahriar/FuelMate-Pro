@@ -8,6 +8,7 @@ import {
   ChevronDown,
   Clock,
   Droplets,
+  Fuel,
   Image,
   MapPin,
   Plus,
@@ -55,12 +56,12 @@ function FuelPage() {
   }, [q]);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-5 text-slate-950">
+    <div className="mx-auto max-w-3xl space-y-5 text-foreground">
       <header className="flex items-center justify-between gap-4">
         <div>
           <h1 className="text-5xl font-bold tracking-tight">Fill-ups</h1>
         </div>
-        <div className="flex rounded-full bg-white p-1 text-slate-950 shadow-[0_12px_35px_oklch(0_0_0/0.12)]">
+        <div className="flex rounded-full bg-card p-1 text-foreground shadow-[0_12px_35px_oklch(0_0_0/0.12)]">
           <button
             onClick={() => setSearchOpen((value) => !value)}
             className="grid h-10 w-10 place-items-center rounded-full hover:bg-slate-100"
@@ -79,12 +80,12 @@ function FuelPage() {
       </header>
 
       {searchOpen && (
-        <div className="rounded-2xl bg-white p-2 text-slate-950 shadow-card">
+        <div className="rounded-2xl bg-card p-2 text-foreground shadow-card">
           <Input
             value={q}
             onChange={(event) => setQ(event.target.value)}
             placeholder="Search station or vehicle"
-            className="border-0 bg-transparent text-slate-950 placeholder:text-slate-400 focus-visible:ring-0"
+            className="border-0 bg-transparent text-foreground placeholder:text-muted-foreground focus-visible:ring-0"
           />
         </div>
       )}
@@ -92,7 +93,7 @@ function FuelPage() {
       <div className="space-y-6">
         {Object.entries(grouped).map(([month, logs]) => (
           <section key={month} className="space-y-3">
-            <h2 className="px-1 text-2xl font-bold text-slate-500">{month}</h2>
+            <h2 className="px-1 text-2xl font-bold text-muted-foreground">{month}</h2>
             {logs.map((log) => {
               const pricePerLitre = log.fuelPricePerLiter;
               const costPerKm = log.cost / Math.max(log.distanceSinceLast, 1);
@@ -102,10 +103,10 @@ function FuelPage() {
               return (
                 <article
                   key={log.id}
-                  className="rounded-2xl bg-white p-5 text-slate-950 shadow-[0_12px_35px_oklch(0_0_0/0.08)]"
+                  className="rounded-2xl bg-card p-5 text-foreground shadow-[0_12px_35px_oklch(0_0_0/0.08)]"
                 >
                   <div className="flex gap-4">
-                    <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white shadow-[0_10px_24px_oklch(0_0_0/0.08)]">
+                    <div className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-background shadow-[0_10px_24px_oklch(0_0_0/0.08)]">
                       <Fuel className="h-8 w-8" />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -124,13 +125,13 @@ function FuelPage() {
                         </div>
                         <div className="text-right">
                           <p className="text-2xl font-bold">{log.odometer.toLocaleString()} km</p>
-                          <p className="mt-1 text-xl text-slate-400">
+                          <p className="mt-1 text-xl text-muted-foreground">
                             {log.distanceSinceLast.toFixed(1)} km
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-4 border-t border-slate-200 pt-4">
+                      <div className="mt-4 border-t border-border pt-4">
                         <CompactRow
                           icon={Droplets}
                           value={`${log.liters} l -> ${pricePerLitre.toFixed(2)}৳/l (${log.fuelTypeCode === "0" ? "Not set" : log.fuelType})`}
@@ -144,12 +145,12 @@ function FuelPage() {
                           <CompactValue
                             icon={Banknote}
                             value={`${costPerKm.toFixed(3)}৳/km`}
-                            className="text-slate-400"
+                            className="text-muted-foreground"
                           />
                         </div>
                       </div>
 
-                      <div className="mt-4 border-t border-slate-200 pt-4">
+                      <div className="mt-4 border-t border-border pt-4">
                         {log.pictureCount > 0 ? (
                           <CompactRow
                             icon={Image}
@@ -220,7 +221,7 @@ function FillUpModal({ onClose }: { onClose: () => void }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[60] flex items-end bg-black/45 backdrop-blur-sm"
+      className="fixed inset-0 z-60 flex items-end bg-black/45 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div
@@ -228,21 +229,21 @@ function FillUpModal({ onClose }: { onClose: () => void }) {
         animate={{ y: 0 }}
         exit={{ y: 80 }}
         transition={{ type: "spring", damping: 28, stiffness: 260 }}
-        className="max-h-[92vh] w-full overflow-y-auto rounded-t-[2rem] bg-white p-4 text-slate-950 shadow-elegant"
+        className="max-h-[92vh] w-full overflow-y-auto rounded-t-[2rem] bg-card p-4 text-foreground shadow-elegant"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="mx-auto max-w-2xl space-y-4">
           <header className="grid grid-cols-3 items-center py-2 text-2xl">
             <button
               onClick={onClose}
-              className="justify-self-start rounded-full bg-white px-7 py-4 font-medium shadow-[0_12px_35px_oklch(0_0_0/0.08)]"
+              className="justify-self-start rounded-full bg-background px-7 py-4 font-medium shadow-[0_12px_35px_oklch(0_0_0/0.08)] text-foreground"
             >
               Cancel
             </button>
             <h2 className="justify-self-center whitespace-nowrap font-bold">Edit</h2>
             <button
               onClick={onClose}
-              className="justify-self-end rounded-full bg-white px-7 py-4 font-bold shadow-[0_12px_35px_oklch(0_0_0/0.08)]"
+              className="justify-self-end rounded-full bg-background px-7 py-4 font-bold shadow-[0_12px_35px_oklch(0_0_0/0.08)] text-foreground"
             >
               Save
             </button>
@@ -279,7 +280,7 @@ function FillUpModal({ onClose }: { onClose: () => void }) {
               <Chip icon={CalendarDays} label={format(new Date(), "MMM d, yyyy")} />
               <Chip icon={Clock} label={format(new Date(), "h:mm a")} />
             </div>
-            <p className="mt-4 text-lg text-slate-400">
+            <p className="mt-4 text-lg text-muted-foreground">
               {format(new Date(), "MMM d, yyyy h:mm a")}
             </p>
           </section>
@@ -297,7 +298,7 @@ function FillUpModal({ onClose }: { onClose: () => void }) {
             <div className="mt-6 space-y-2 text-2xl">
               <p>Selected</p>
               <p>{latest.station}</p>
-              <p className="text-lg text-slate-400">
+              <p className="text-lg text-muted-foreground">
                 {latest.city || "Station ID " + latest.stationId}
               </p>
             </div>
@@ -334,10 +335,10 @@ function FormBlock({
     <label className={wide ? "block" : "block"}>
       <span className="text-2xl">{label}</span>
       <input
-        className="mt-3 h-14 w-full rounded-lg border border-slate-200 bg-white px-3 text-2xl outline-none placeholder:text-slate-950"
+        className="mt-3 h-14 w-full rounded-lg border border-border bg-background px-3 text-2xl outline-none placeholder:text-muted-foreground"
         placeholder={placeholder}
       />
-      {helper && <span className="mt-3 block text-lg text-slate-400">{helper}</span>}
+      {helper && <span className="mt-3 block text-lg text-muted-foreground">{helper}</span>}
     </label>
   );
 }
@@ -346,8 +347,8 @@ function FormSelect({ label }: { label: string }) {
   return (
     <label className="block">
       <span className="text-2xl">{label}</span>
-      <span className="mt-3 flex h-14 items-center justify-between rounded-2xl border border-slate-300 px-4 text-2xl">
-        Not set <ChevronDown className="h-6 w-6 text-slate-500" />
+      <span className="mt-3 flex h-14 items-center justify-between rounded-2xl border border-border px-4 text-2xl">
+        Not set <ChevronDown className="h-6 w-6 text-muted-foreground" />
       </span>
     </label>
   );
@@ -355,7 +356,7 @@ function FormSelect({ label }: { label: string }) {
 
 function Chip({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
   return (
-    <button className="inline-flex items-center gap-2 rounded-full bg-slate-200/80 px-5 py-3 text-2xl font-medium">
+    <button className="inline-flex items-center gap-2 rounded-full bg-muted/70 px-5 py-3 text-2xl font-medium text-foreground">
       <Icon className="h-4 w-4 text-[oklch(0.55_0.22_305)]" />
       {label}
     </button>
@@ -382,7 +383,7 @@ function ToggleSwitch({ on, defaultOn = false }: { on?: boolean; defaultOn?: boo
       className={`flex h-11 w-20 items-center rounded-full p-1 transition-colors ${active ? "bg-[oklch(0.72_0.18_150)]" : "bg-slate-300"}`}
     >
       <span
-        className={`h-9 w-9 rounded-full bg-white shadow-sm transition-transform ${active ? "translate-x-9" : ""}`}
+        className={`h-9 w-9 rounded-full bg-background shadow-sm transition-transform ${active ? "translate-x-9" : ""}`}
       />
     </span>
   );

@@ -119,24 +119,24 @@ function StatsPage() {
   }, []);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-5 text-slate-950">
+    <div className="mx-auto max-w-3xl space-y-5 text-foreground">
       <header className="space-y-7 pt-1">
         <Link
           to="/app/dashboard"
-          className="grid h-14 w-14 place-items-center rounded-full bg-white text-slate-950 shadow-[0_12px_35px_oklch(0_0_0/0.12)]"
+          className="grid h-14 w-14 place-items-center rounded-full bg-card text-foreground shadow-[0_12px_35px_oklch(0_0_0/0.12)]"
         >
           <ArrowLeft className="h-7 w-7" />
         </Link>
         <h1 className="text-5xl font-bold tracking-tight">Stats</h1>
       </header>
 
-      <div className="grid grid-cols-3 rounded-full bg-slate-200/80 p-1 text-base font-medium">
+      <div className="grid grid-cols-3 rounded-full bg-muted/70 p-1 text-base font-medium">
         {(["Fill-ups", "Costs", "Distance"] as Tab[]).map((item) => (
           <button
             key={item}
             onClick={() => setTab(item)}
             className={`rounded-full px-3 py-2.5 transition-colors ${
-              tab === item ? "bg-white text-slate-950 shadow-sm" : "text-slate-950"
+              tab === item ? "bg-card text-foreground shadow-sm" : "text-foreground"
             }`}
           >
             {item}
@@ -283,12 +283,12 @@ function StatsPage() {
       {tab === "Distance" && (
         <div className="space-y-5">
           <div className="relative h-36 overflow-hidden rounded-2xl bg-[oklch(0.48_0.2_295)] p-5 text-white shadow-card">
-            <div className="absolute bottom-0 left-10 h-24 w-36 rounded-t-full border-[10px] border-white/15" />
+            <div className="absolute bottom-0 left-10 h-24 w-36 rounded-t-full border-10 border-white/15" />
             <div className="absolute right-8 top-8 rounded-2xl bg-red-500 p-4 shadow-lg">
               <Gauge className="h-12 w-12" />
             </div>
             <div className="relative flex h-full items-end gap-4">
-              <div className="grid h-20 w-20 place-items-center rounded-full bg-white/20">
+              <div className="grid h-20 w-20 place-items-center rounded-full bg-white/10">
                 <Car className="h-12 w-12" />
               </div>
               <Fuel className="mb-2 h-16 w-16 rotate-45 text-black" />
@@ -347,8 +347,8 @@ type Metric = {
 
 function SummaryCard({ title, value }: { title: string; value: string }) {
   return (
-    <section className="rounded-2xl bg-white p-6 shadow-[0_12px_35px_oklch(0_0_0/0.08)]">
-      <p className="text-xl text-slate-400">{title}</p>
+    <section className="rounded-2xl bg-card p-6 shadow-[0_12px_35px_oklch(0_0_0/0.08)]">
+      <p className="text-xl text-muted-foreground">{title}</p>
       <p className="mt-4 text-3xl font-bold">{value}</p>
     </section>
   );
@@ -369,15 +369,15 @@ function MetricCard({
   const bottomMetrics = dividerAt === undefined ? [] : metrics.slice(dividerAt);
 
   return (
-    <section className="rounded-2xl bg-white p-6 shadow-[0_12px_35px_oklch(0_0_0/0.08)]">
-      {title && <p className="text-xl text-slate-400">{title}</p>}
+    <section className="rounded-2xl bg-card p-6 shadow-[0_12px_35px_oklch(0_0_0/0.08)]">
+      {title && <p className="text-xl text-muted-foreground">{title}</p>}
       {value && <p className="mt-3 text-3xl font-bold">{value}</p>}
       <div className="mt-6 grid grid-cols-2 gap-x-10 gap-y-7">
         {topMetrics.map((metric, index) => (
           <MetricItem key={`${metric.label}-${index}`} metric={metric} />
         ))}
         {bottomMetrics.length > 0 && (
-          <div className="col-span-2 grid grid-cols-2 gap-x-10 border-t border-slate-200 pt-6">
+          <div className="col-span-2 grid grid-cols-2 gap-x-10 border-t border-border pt-6">
             {bottomMetrics.map((metric, index) => (
               <MetricItem key={`${metric.label}-${index}`} metric={metric} />
             ))}
@@ -400,16 +400,16 @@ function MetricItem({ metric }: { metric: Metric }) {
   return (
     <div>
       {metric.heading && (
-        <p className="mb-5 text-sm font-medium tracking-wide text-slate-400">{metric.heading}</p>
+        <p className="mb-5 text-sm font-medium tracking-wide text-muted-foreground">{metric.heading}</p>
       )}
       {metric.labelFirst && (
-        <p className="mb-4 text-sm font-medium tracking-wide text-slate-400">{metric.label}</p>
+        <p className="mb-4 text-sm font-medium tracking-wide text-muted-foreground">{metric.label}</p>
       )}
       <p className="flex items-center gap-2 text-2xl font-semibold">
         {Icon && <Icon className={`h-6 w-6 ${tone}`} />}
         {metric.value}
       </p>
-      {!metric.labelFirst && <p className="mt-4 text-lg text-slate-400">{metric.label}</p>}
+      {!metric.labelFirst && <p className="mt-4 text-lg text-muted-foreground">{metric.label}</p>}
     </div>
   );
 }

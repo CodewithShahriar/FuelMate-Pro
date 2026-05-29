@@ -16,7 +16,7 @@ export function AppShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <div className="min-h-screen w-full bg-background">
+    <div className="min-h-screen w-full bg-background text-foreground">
       <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border/60 bg-background/70 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
         <Logo />
         <div className="flex items-center gap-2">
@@ -43,7 +43,7 @@ export function AppShell() {
         </AnimatePresence>
       </main>
 
-      <nav className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-[2rem] border border-white/80 bg-white/90 px-2 py-2 shadow-[0_18px_50px_oklch(0_0_0/0.18)] backdrop-blur-2xl">
+      <nav className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-[2rem] border border-border/70 bg-card/95 px-2 py-2 shadow-elegant backdrop-blur-2xl">
         <div className="grid grid-cols-5 gap-1">
           {bottomNav.map((item) => {
             const Icon = item.icon;
@@ -56,7 +56,7 @@ export function AppShell() {
                 className={`flex min-w-0 flex-col items-center justify-center gap-1 rounded-[1.5rem] px-1 py-2 text-[10px] font-medium transition-colors ${
                   active
                     ? "bg-[oklch(0.91_0.03_295)] text-[oklch(0.48_0.2_295)]"
-                    : "text-slate-950 hover:bg-slate-100"
+                    : "text-foreground hover:bg-card"
                 }`}
               >
                 <Icon className="h-5 w-5" />
