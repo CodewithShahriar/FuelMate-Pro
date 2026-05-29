@@ -164,7 +164,7 @@ function MiniDashboardPreview() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { l: "Fuel cost", v: "$2,184", d: "-8%" },
-          { l: "Efficiency", v: "18.2 mpg", d: "+5%" },
+          { l: "Efficiency", v: "18.2 km/L", d: "+5%" },
           { l: "Vehicles", v: "3", d: "" },
           { l: "Health", v: "92", d: "+2" },
         ].map((s, i) => (

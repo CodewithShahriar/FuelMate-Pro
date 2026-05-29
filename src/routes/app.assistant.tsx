@@ -44,7 +44,7 @@ function Page() {
               </Button>
             </form>
             <div className="mt-3 flex flex-wrap gap-2">
-              {["Predict my next service", "Best mpg driver in the fleet", "Reduce monthly fuel cost"].map((s) => (
+              {["Predict my next service", "Best km/L driver in the fleet", "Reduce monthly fuel cost"].map((s) => (
                 <button key={s} className="text-xs glass rounded-full px-3 py-1.5 hover:bg-accent/10">{s}</button>
               ))}
             </div>

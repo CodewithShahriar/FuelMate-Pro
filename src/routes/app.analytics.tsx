@@ -16,7 +16,7 @@ function Page() {
     const logs = fuelLogs.filter((l) => l.vehicleId === v.id);
     return {
       name: `${v.brand} ${v.model}`,
-      mpg: +(logs.reduce((s, l) => s + l.mileage, 0) / Math.max(logs.length, 1)).toFixed(1),
+      kmPerLiter: +(logs.reduce((s, l) => s + l.mileage, 0) / Math.max(logs.length, 1)).toFixed(1),
       cost: +logs.reduce((s, l) => s + l.cost, 0).toFixed(0),
     };
   });
@@ -59,13 +59,13 @@ function Page() {
                 <XAxis type="number" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
                 <YAxis type="category" dataKey="name" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} width={120} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Bar dataKey="mpg" fill="oklch(0.84 0.17 88)" radius={[0, 8, 8, 0]} />
+                <Bar dataKey="kmPerLiter" fill="oklch(0.84 0.17 88)" radius={[0, 8, 8, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
         <div className="glass rounded-2xl p-5 shadow-card">
-          <h3 className="font-display text-lg font-semibold mb-3">Weekly mileage</h3>
+          <h3 className="font-display text-lg font-semibold mb-3">Weekly efficiency</h3>
           <div className="h-64">
             <ResponsiveContainer>
               <LineChart data={efficiencyTrend}>
@@ -73,7 +73,7 @@ function Page() {
                 <XAxis dataKey="week" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
                 <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Line dataKey="mpg" stroke="oklch(0.78 0.16 155)" strokeWidth={2.5} dot={{ r: 3 }} />
+                <Line dataKey="kmPerLiter" stroke="oklch(0.78 0.16 155)" strokeWidth={2.5} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -84,7 +84,7 @@ function Page() {
         {compare.map((c) => (
           <div key={c.name} className="glass rounded-2xl p-5 shadow-card">
             <p className="text-xs text-muted-foreground">{c.name}</p>
-            <p className="mt-2 text-3xl font-display font-semibold">{c.mpg} <span className="text-sm text-muted-foreground">mpg avg</span></p>
+            <p className="mt-2 text-3xl font-display font-semibold">{c.kmPerLiter} <span className="text-sm text-muted-foreground">km/L avg</span></p>
             <p className="text-xs text-muted-foreground mt-1">Total fuel spend: <span className="text-foreground font-medium">${c.cost}</span></p>
           </div>
         ))}

@@ -21,7 +21,7 @@ function VehiclePage() {
   const chart = logs
     .slice()
     .reverse()
-    .map((l) => ({ date: format(parseISO(l.date), "MMM d"), mpg: l.mileage, cost: l.cost }));
+    .map((l) => ({ date: format(parseISO(l.date), "MMM d"), kmPerLiter: l.mileage, cost: l.cost }));
 
   return (
     <div className="space-y-6">
@@ -57,12 +57,12 @@ function VehiclePage() {
       </div>
 
       <div className="glass rounded-2xl p-5">
-        <h3 className="font-display text-lg font-semibold mb-3">Mileage performance</h3>
+        <h3 className="font-display text-lg font-semibold mb-3">Efficiency performance</h3>
         <div className="h-64">
           <ResponsiveContainer>
             <AreaChart data={chart}>
               <defs>
-                <linearGradient id="gMpg" x1="0" x2="0" y1="0" y2="1">
+                <linearGradient id="gKmPerLiter" x1="0" x2="0" y1="0" y2="1">
                   <stop offset="0%" stopColor="oklch(0.84 0.17 88)" stopOpacity={0.5} />
                   <stop offset="100%" stopColor="oklch(0.84 0.17 88)" stopOpacity={0} />
                 </linearGradient>
@@ -71,7 +71,7 @@ function VehiclePage() {
               <XAxis dataKey="date" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
               <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
               <Tooltip contentStyle={tooltipStyle} />
-              <Area type="monotone" dataKey="mpg" stroke="oklch(0.84 0.17 88)" strokeWidth={2} fill="url(#gMpg)" />
+              <Area type="monotone" dataKey="kmPerLiter" stroke="oklch(0.84 0.17 88)" strokeWidth={2} fill="url(#gKmPerLiter)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>

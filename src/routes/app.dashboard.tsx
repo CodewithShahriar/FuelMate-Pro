@@ -37,7 +37,7 @@ function Dashboard() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <StatCard index={0} label="Total fuel cost" value={`$${totals.fuelCost.toFixed(0)}`} delta={-8} icon={DollarSign} />
         <StatCard index={1} label="Monthly expense" value={`$${totals.monthlyExpense.toFixed(0)}`} delta={4} icon={Fuel} />
-        <StatCard index={2} label="Avg efficiency" value={`${totals.efficiency} mpg`} delta={5} icon={Gauge} />
+        <StatCard index={2} label="Avg efficiency" value={`${totals.efficiency} km/L`} delta={5} icon={Gauge} />
         <StatCard index={3} label="Total mileage" value={`${(totals.mileage / 1000).toFixed(1)}k km`} delta={2} icon={Activity} />
         <StatCard index={4} label="Health score" value={`${totals.health}/100`} delta={3} icon={Sparkles} />
       </div>
@@ -132,7 +132,7 @@ function Dashboard() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{v.brand} {v.model} · {l.station}</p>
-                    <p className="text-xs text-muted-foreground">{format(parseISO(l.date), "MMM d")} · {l.liters}L · {l.mileage} mpg</p>
+                    <p className="text-xs text-muted-foreground">{format(parseISO(l.date), "MMM d")} · {l.liters}L · {l.mileage} km/L</p>
                   </div>
                   <p className="text-sm font-display font-semibold">${l.cost.toFixed(2)}</p>
                 </div>
@@ -183,7 +183,7 @@ function Dashboard() {
               <XAxis dataKey="week" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
               <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
               <Tooltip contentStyle={tooltipStyle} />
-              <Bar dataKey="mpg" fill="oklch(0.84 0.17 88)" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="kmPerLiter" fill="oklch(0.84 0.17 88)" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

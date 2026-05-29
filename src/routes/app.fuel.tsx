@@ -57,7 +57,7 @@ function Page() {
                 <Th>Date</Th><Th>Vehicle</Th><Th>Station</Th>
                 <Th className="text-right">Liters</Th>
                 <Th className="text-right">Cost</Th>
-                <Th className="text-right">Mileage</Th>
+                <Th className="text-right">Efficiency</Th>
               </tr>
             </thead>
             <tbody>
@@ -70,7 +70,7 @@ function Page() {
                     <Td className="text-muted-foreground">{l.station}</Td>
                     <Td className="text-right">{l.liters}L</Td>
                     <Td className="text-right font-display font-semibold">${l.cost.toFixed(2)}</Td>
-                    <Td className="text-right text-primary">{l.mileage} mpg</Td>
+                    <Td className="text-right text-primary">{l.mileage} km/L</Td>
                   </tr>
                 );
               })}
@@ -90,7 +90,7 @@ function Page() {
                 <p className="text-xs text-muted-foreground">{v.brand} {v.model} · {format(parseISO(l.date), "MMM d")}</p>
                 <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
                   <Box label="Liters" value={`${l.liters}L`} />
-                  <Box label="Mileage" value={`${l.mileage}`} />
+                  <Box label="Efficiency" value={`${l.mileage} km/L`} />
                   <Box label="Odo" value={`${(l.odometer / 1000).toFixed(1)}k`} />
                 </div>
               </div>

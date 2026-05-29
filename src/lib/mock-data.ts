@@ -133,14 +133,14 @@ export const monthlyTrend = [
 ];
 
 export const efficiencyTrend = [
-  { week: "W1", mpg: 16.2 },
-  { week: "W2", mpg: 17.1 },
-  { week: "W3", mpg: 15.8 },
-  { week: "W4", mpg: 18.3 },
-  { week: "W5", mpg: 17.9 },
-  { week: "W6", mpg: 19.1 },
-  { week: "W7", mpg: 18.7 },
-  { week: "W8", mpg: 20.2 },
+  { week: "W1", kmPerLiter: 16.2 },
+  { week: "W2", kmPerLiter: 17.1 },
+  { week: "W3", kmPerLiter: 15.8 },
+  { week: "W4", kmPerLiter: 18.3 },
+  { week: "W5", kmPerLiter: 17.9 },
+  { week: "W6", kmPerLiter: 19.1 },
+  { week: "W7", kmPerLiter: 18.7 },
+  { week: "W8", kmPerLiter: 20.2 },
 ];
 
 export const expenseBreakdown = [
@@ -157,7 +157,7 @@ export const aiInsights = [
     id: "ai1",
     type: "saving",
     title: "Save ~$48 / month on fuel",
-    body: "Your BMW averages 14.2 mpg — driving below 70 mph on highway segments could improve efficiency by 12%.",
+    body: "Your BMW averages 14.2 km/L — driving below 70 mph on highway segments could improve efficiency by 12%.",
   },
   {
     id: "ai2",
