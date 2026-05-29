@@ -15,6 +15,8 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppVehiclesRouteImport } from './routes/app.vehicles'
+import { Route as AppStatsRouteImport } from './routes/app.stats'
+import { Route as AppStationsRouteImport } from './routes/app.stations'
 import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppRemindersRouteImport } from './routes/app.reminders'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
@@ -53,6 +55,16 @@ const IndexRoute = IndexRouteImport.update({
 const AppVehiclesRoute = AppVehiclesRouteImport.update({
   id: '/vehicles',
   path: '/vehicles',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStatsRoute = AppStatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppStationsRoute = AppStationsRouteImport.update({
+  id: '/stations',
+  path: '/stations',
   getParentRoute: () => AppRoute,
 } as any)
 const AppSettingsRoute = AppSettingsRouteImport.update({
@@ -115,6 +127,8 @@ export interface FileRoutesByFullPath {
   '/app/profile': typeof AppProfileRoute
   '/app/reminders': typeof AppRemindersRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/stations': typeof AppStationsRoute
+  '/app/stats': typeof AppStatsRoute
   '/app/vehicles': typeof AppVehiclesRouteWithChildren
   '/app/vehicles/$id': typeof AppVehiclesIdRoute
 }
@@ -132,6 +146,8 @@ export interface FileRoutesByTo {
   '/app/profile': typeof AppProfileRoute
   '/app/reminders': typeof AppRemindersRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/stations': typeof AppStationsRoute
+  '/app/stats': typeof AppStatsRoute
   '/app/vehicles': typeof AppVehiclesRouteWithChildren
   '/app/vehicles/$id': typeof AppVehiclesIdRoute
 }
@@ -150,6 +166,8 @@ export interface FileRoutesById {
   '/app/profile': typeof AppProfileRoute
   '/app/reminders': typeof AppRemindersRoute
   '/app/settings': typeof AppSettingsRoute
+  '/app/stations': typeof AppStationsRoute
+  '/app/stats': typeof AppStatsRoute
   '/app/vehicles': typeof AppVehiclesRouteWithChildren
   '/app/vehicles/$id': typeof AppVehiclesIdRoute
 }
@@ -169,6 +187,8 @@ export interface FileRouteTypes {
     | '/app/profile'
     | '/app/reminders'
     | '/app/settings'
+    | '/app/stations'
+    | '/app/stats'
     | '/app/vehicles'
     | '/app/vehicles/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -186,6 +206,8 @@ export interface FileRouteTypes {
     | '/app/profile'
     | '/app/reminders'
     | '/app/settings'
+    | '/app/stations'
+    | '/app/stats'
     | '/app/vehicles'
     | '/app/vehicles/$id'
   id:
@@ -203,6 +225,8 @@ export interface FileRouteTypes {
     | '/app/profile'
     | '/app/reminders'
     | '/app/settings'
+    | '/app/stations'
+    | '/app/stats'
     | '/app/vehicles'
     | '/app/vehicles/$id'
   fileRoutesById: FileRoutesById
@@ -257,6 +281,20 @@ declare module '@tanstack/react-router' {
       path: '/vehicles'
       fullPath: '/app/vehicles'
       preLoaderRoute: typeof AppVehiclesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/stats': {
+      id: '/app/stats'
+      path: '/stats'
+      fullPath: '/app/stats'
+      preLoaderRoute: typeof AppStatsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/stations': {
+      id: '/app/stations'
+      path: '/stations'
+      fullPath: '/app/stations'
+      preLoaderRoute: typeof AppStationsRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/settings': {
@@ -346,6 +384,8 @@ interface AppRouteChildren {
   AppProfileRoute: typeof AppProfileRoute
   AppRemindersRoute: typeof AppRemindersRoute
   AppSettingsRoute: typeof AppSettingsRoute
+  AppStationsRoute: typeof AppStationsRoute
+  AppStatsRoute: typeof AppStatsRoute
   AppVehiclesRoute: typeof AppVehiclesRouteWithChildren
 }
 
@@ -358,6 +398,8 @@ const AppRouteChildren: AppRouteChildren = {
   AppProfileRoute: AppProfileRoute,
   AppRemindersRoute: AppRemindersRoute,
   AppSettingsRoute: AppSettingsRoute,
+  AppStationsRoute: AppStationsRoute,
+  AppStatsRoute: AppStatsRoute,
   AppVehiclesRoute: AppVehiclesRouteWithChildren,
 }
 

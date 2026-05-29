@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
-  AreaChart, Area, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid,
-  BarChart, Bar, PieChart, Pie, Cell, Legend,
+  ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid,
+  BarChart, Bar,
 } from "recharts";
-import { DollarSign, Fuel, Gauge, Activity, Bell, Sparkles, ArrowRight } from "lucide-react";
+import { DollarSign, Fuel, Gauge, Activity, Bell, Sparkles, ArrowRight, BarChart3 } from "lucide-react";
 import { StatCard } from "@/components/StatCard";
 import {
-  totals, monthlyTrend, efficiencyTrend, expenseBreakdown, fuelLogs, reminders, vehicles, aiInsights,
+  totals, monthlyTrend, fuelLogs, reminders, vehicles, aiInsights,
 } from "@/lib/mock-data";
 import { format, parseISO } from "date-fns";
 
@@ -27,6 +27,9 @@ function Dashboard() {
         <div className="flex gap-2">
           <Link to="/app/fuel" className="glass rounded-xl px-4 py-2 text-sm hover:bg-accent/10">
             + Fuel log
+          </Link>
+          <Link to="/app/stats" className="glass rounded-xl px-4 py-2 text-sm hover:bg-accent/10">
+            Stats
           </Link>
           <Link to="/app/expenses" className="bg-gradient-primary text-primary-foreground rounded-xl px-4 py-2 text-sm shadow-glow hover:opacity-90">
             + Expense
@@ -49,34 +52,20 @@ function Dashboard() {
         >
           <div className="flex items-center justify-between mb-4">
             <div>
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">Spending trend</p>
-              <h3 className="font-display text-lg font-semibold">Fuel vs expenses</h3>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">Expense breakdown</p>
+              <h3 className="font-display text-lg font-semibold">Fuel spend, last 3 months</h3>
             </div>
-            <div className="flex gap-4 text-xs text-muted-foreground">
-              <Legend2 color="oklch(0.84 0.17 88)" label="Fuel" />
-              <Legend2 color="oklch(0.75 0.13 200)" label="Expenses" />
-            </div>
+            <Fuel className="h-4 w-4 text-primary" />
           </div>
-          <div className="h-64">
+          <div className="h-56">
             <ResponsiveContainer>
-              <AreaChart data={monthlyTrend}>
-                <defs>
-                  <linearGradient id="gFuel" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="oklch(0.84 0.17 88)" stopOpacity={0.5} />
-                    <stop offset="100%" stopColor="oklch(0.84 0.17 88)" stopOpacity={0} />
-                  </linearGradient>
-                  <linearGradient id="gExp" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="oklch(0.75 0.13 200)" stopOpacity={0.4} />
-                    <stop offset="100%" stopColor="oklch(0.75 0.13 200)" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
+              <BarChart data={monthlyTrend.slice(-3)}>
                 <CartesianGrid stroke="oklch(1 0 0 / 0.05)" vertical={false} />
                 <XAxis dataKey="month" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
                 <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Area type="monotone" dataKey="fuel" stroke="oklch(0.84 0.17 88)" strokeWidth={2} fill="url(#gFuel)" />
-                <Area type="monotone" dataKey="expenses" stroke="oklch(0.75 0.13 200)" strokeWidth={2} fill="url(#gExp)" />
-              </AreaChart>
+                <Bar dataKey="fuel" fill="oklch(0.84 0.17 88)" radius={[10, 10, 0, 0]} />
+              </BarChart>
             </ResponsiveContainer>
           </div>
         </motion.div>
@@ -85,29 +74,27 @@ function Dashboard() {
           initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
           className="glass rounded-2xl p-5 shadow-card"
         >
-          <p className="text-xs uppercase tracking-wider text-muted-foreground">Expense breakdown</p>
-          <h3 className="font-display text-lg font-semibold">By category</h3>
-          <div className="h-56 mt-2">
-            <ResponsiveContainer>
-              <PieChart>
-                <Pie data={expenseBreakdown} dataKey="value" innerRadius={50} outerRadius={80} stroke="none">
-                  {expenseBreakdown.map((e, i) => <Cell key={i} fill={e.color} />)}
-                </Pie>
-                <Tooltip contentStyle={tooltipStyle} />
-              </PieChart>
-            </ResponsiveContainer>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">Stats</p>
+              <h3 className="font-display text-lg font-semibold">Deep details</h3>
+            </div>
+            <BarChart3 className="h-5 w-5 text-primary" />
           </div>
-          <div className="space-y-1.5 text-xs">
-            {expenseBreakdown.slice(0, 4).map((e) => (
-              <div key={e.name} className="flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full" style={{ background: e.color }} />
-                  {e.name}
-                </span>
-                <span className="text-muted-foreground">${e.value}</span>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Fill-ups, costs, and distance summaries in one clean screen.
+          </p>
+          <div className="mt-5 space-y-2 text-sm">
+            {["Fill-ups", "Costs", "Distance"].map((item) => (
+              <div key={item} className="flex items-center justify-between rounded-xl bg-accent/5 px-3 py-2">
+                <span>{item}</span>
+                <ArrowRight className="h-3.5 w-3.5 text-primary" />
               </div>
             ))}
           </div>
+          <Link to="/app/stats" className="mt-5 inline-flex w-full items-center justify-center rounded-xl bg-gradient-primary px-4 py-2 text-sm text-primary-foreground shadow-glow hover:opacity-90">
+            Open Stats
+          </Link>
         </motion.div>
       </div>
 
@@ -167,29 +154,6 @@ function Dashboard() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-        className="glass rounded-2xl p-5 shadow-card"
-      >
-        <div className="flex items-center justify-between mb-3">
-          <div>
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">Weekly efficiency</p>
-            <h3 className="font-display text-lg font-semibold">Fuel economy trend</h3>
-          </div>
-        </div>
-        <div className="h-48">
-          <ResponsiveContainer>
-            <BarChart data={efficiencyTrend}>
-              <CartesianGrid stroke="oklch(1 0 0 / 0.05)" vertical={false} />
-              <XAxis dataKey="week" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
-              <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={tooltipStyle} />
-              <Bar dataKey="kmPerLiter" fill="oklch(0.84 0.17 88)" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      </motion.div>
-
-      <motion.div
         initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
         className="relative overflow-hidden glass-strong rounded-2xl p-6"
       >
@@ -208,15 +172,6 @@ function Dashboard() {
         </div>
       </motion.div>
     </div>
-  );
-}
-
-function Legend2({ color, label }: { color: string; label: string }) {
-  return (
-    <span className="flex items-center gap-1.5">
-      <span className="h-2 w-2 rounded-full" style={{ background: color }} />
-      {label}
-    </span>
   );
 }
 
