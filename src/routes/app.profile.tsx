@@ -23,7 +23,9 @@ function Page() {
           <div>
             <h2 className="font-display text-xl font-semibold">Alex Morgan</h2>
             <p className="text-sm text-muted-foreground">alex@fuelmate.pro · Pro plan</p>
-            <Button variant="outline" size="sm" className="mt-2 glass border-border/60 rounded-lg">Upload photo</Button>
+            <Button variant="outline" size="sm" className="mt-2 glass border-border/60 rounded-lg">
+              Upload photo
+            </Button>
           </div>
         </div>
       </div>
@@ -34,7 +36,9 @@ function Page() {
         <Fld label="Phone" defaultValue="+1 555 010 2030" />
         <Fld label="Location" defaultValue="San Francisco, CA" />
         <div className="sm:col-span-2 flex justify-end">
-          <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90 rounded-xl shadow-glow">Save changes</Button>
+          <Button className="bg-gradient-primary text-primary-foreground hover:opacity-90 rounded-xl shadow-glow">
+            Save changes
+          </Button>
         </div>
       </div>
     </div>

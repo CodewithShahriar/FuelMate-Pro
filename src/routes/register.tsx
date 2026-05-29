@@ -21,7 +21,9 @@ function RegisterPage() {
       footer={
         <>
           Already have an account?{" "}
-          <Link to="/login" className="text-primary hover:underline">Sign in</Link>
+          <Link to="/login" className="text-primary hover:underline">
+            Sign in
+          </Link>
         </>
       }
     >
@@ -35,11 +37,15 @@ function RegisterPage() {
         <Field icon={User} type="text" placeholder="Alex Morgan" label="Full name" />
         <Field icon={Mail} type="email" placeholder="you@example.com" label="Email" />
         <Field icon={Lock} type="password" placeholder="At least 8 characters" label="Password" />
-        <Button type="submit" className="w-full h-11 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow">
+        <Button
+          type="submit"
+          className="w-full h-11 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
+        >
           Create account
         </Button>
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <div className="flex-1 h-px bg-border" /> or continue with <div className="flex-1 h-px bg-border" />
+          <div className="flex-1 h-px bg-border" /> or continue with{" "}
+          <div className="flex-1 h-px bg-border" />
         </div>
         <SocialRow />
         <p className="text-[11px] text-muted-foreground text-center">

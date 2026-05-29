@@ -61,12 +61,21 @@ function LandingNav() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Logo />
         <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-          <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-          <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
-          <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
+          <a href="#features" className="hover:text-foreground transition-colors">
+            Features
+          </a>
+          <a href="#pricing" className="hover:text-foreground transition-colors">
+            Pricing
+          </a>
+          <a href="#faq" className="hover:text-foreground transition-colors">
+            FAQ
+          </a>
         </nav>
         <div className="flex items-center gap-2">
-          <Link to="/login" className="text-sm text-muted-foreground hover:text-foreground px-3 py-2">
+          <Link
+            to="/login"
+            className="text-sm text-muted-foreground hover:text-foreground px-3 py-2"
+          >
             Sign in
           </Link>
           <Link to="/register">
@@ -101,9 +110,8 @@ function Hero() {
           transition={{ delay: 0.05, duration: 0.6 }}
           className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-display font-semibold tracking-[-0.04em] leading-[1.05]"
         >
-          Track Fuel, Expenses &{" "}
-          <span className="text-gradient">Vehicle Performance</span>{" "}
-          Like a Pro
+          Track Fuel, Expenses & <span className="text-gradient">Vehicle Performance</span> Like a
+          Pro
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 12 }}
@@ -111,7 +119,8 @@ function Hero() {
           transition={{ delay: 0.15, duration: 0.6 }}
           className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto"
         >
-          The modern AI-powered vehicle management platform built for smart drivers and fleet owners.
+          The modern AI-powered vehicle management platform built for smart drivers and fleet
+          owners.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -120,12 +129,19 @@ function Hero() {
           className="mt-9 flex flex-wrap items-center justify-center gap-3"
         >
           <Link to="/register">
-            <Button size="lg" className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow h-12 px-6 rounded-xl">
+            <Button
+              size="lg"
+              className="bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow h-12 px-6 rounded-xl"
+            >
               Get Started <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
           </Link>
           <Link to="/app/dashboard">
-            <Button size="lg" variant="outline" className="h-12 px-6 rounded-xl glass border-border/60">
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-12 px-6 rounded-xl glass border-border/60"
+            >
               Live Demo
             </Button>
           </Link>
@@ -205,7 +221,12 @@ function LogosStrip() {
       <div className="max-w-7xl mx-auto px-6 py-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-4 text-sm text-muted-foreground">
         <span className="text-xs uppercase tracking-[0.2em]">Trusted by drivers at</span>
         {["Tesla", "Uber", "Lyft", "FedEx", "DHL", "Bolt"].map((n) => (
-          <span key={n} className="font-display font-semibold opacity-60 hover:opacity-100 transition-opacity">{n}</span>
+          <span
+            key={n}
+            className="font-display font-semibold opacity-60 hover:opacity-100 transition-opacity"
+          >
+            {n}
+          </span>
         ))}
       </div>
     </div>
@@ -213,12 +234,36 @@ function LogosStrip() {
 }
 
 const features = [
-  { icon: Fuel, title: "Smart fuel logging", body: "Log fills in seconds. Auto-calculated mileage, cost-per-km, and consumption trends." },
-  { icon: BarChart3, title: "Powerful analytics", body: "Beautiful charts and monthly reports that surface what actually matters." },
-  { icon: Car, title: "Multi-vehicle fleet", body: "Manage personal cars or a full fleet with per-vehicle performance scoring." },
-  { icon: Bell, title: "Service reminders", body: "Never miss oil changes, tire rotations, or insurance renewals again." },
-  { icon: Sparkles, title: "AI insights", body: "Predictive maintenance and fuel-saving suggestions tailored to your driving." },
-  { icon: Shield, title: "Private by design", body: "Your data stays yours. End-to-end encryption and zero ad-tracking." },
+  {
+    icon: Fuel,
+    title: "Smart fuel logging",
+    body: "Log fills in seconds. Auto-calculated mileage, cost-per-km, and consumption trends.",
+  },
+  {
+    icon: BarChart3,
+    title: "Powerful analytics",
+    body: "Beautiful charts and monthly reports that surface what actually matters.",
+  },
+  {
+    icon: Car,
+    title: "Multi-vehicle fleet",
+    body: "Manage personal cars or a full fleet with per-vehicle performance scoring.",
+  },
+  {
+    icon: Bell,
+    title: "Service reminders",
+    body: "Never miss oil changes, tire rotations, or insurance renewals again.",
+  },
+  {
+    icon: Sparkles,
+    title: "AI insights",
+    body: "Predictive maintenance and fuel-saving suggestions tailored to your driving.",
+  },
+  {
+    icon: Shield,
+    title: "Private by design",
+    body: "Your data stays yours. End-to-end encryption and zero ad-tracking.",
+  },
 ];
 
 function Features() {
@@ -230,7 +275,10 @@ function Features() {
           <h2 className="mt-3 text-4xl sm:text-5xl font-display font-semibold tracking-tight">
             Everything you need to <span className="text-gradient">drive smarter</span>
           </h2>
-          <p className="mt-4 text-muted-foreground">From quick fuel logs to AI predictions, FuelMate Pro is the complete toolkit for modern drivers.</p>
+          <p className="mt-4 text-muted-foreground">
+            From quick fuel logs to AI predictions, FuelMate Pro is the complete toolkit for modern
+            drivers.
+          </p>
         </div>
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {features.map((f, i) => (
@@ -265,7 +313,8 @@ function DashboardPreview() {
             A dashboard you'll actually open daily.
           </h2>
           <p className="mt-4 text-muted-foreground text-lg">
-            Every metric is a glance away. Spot anomalies, celebrate savings, and plan ahead with confidence.
+            Every metric is a glance away. Spot anomalies, celebrate savings, and plan ahead with
+            confidence.
           </p>
           <ul className="mt-6 space-y-3">
             {[
@@ -296,16 +345,30 @@ function DashboardPreview() {
 
 function Testimonials() {
   const items = [
-    { name: "Maria Chen", role: "Fleet manager, Bolt", body: "We replaced three spreadsheets and a clipboard with FuelMate. Our drivers love it." },
-    { name: "James Patel", role: "Tesla owner", body: "Finally, charging costs that actually make sense. The AI tips paid for the plan in a week." },
-    { name: "Sofia Rivera", role: "Rideshare driver", body: "I log a fuel-up in 8 seconds. The mileage graphs help me drive more efficiently." },
+    {
+      name: "Maria Chen",
+      role: "Fleet manager, Bolt",
+      body: "We replaced three spreadsheets and a clipboard with FuelMate. Our drivers love it.",
+    },
+    {
+      name: "James Patel",
+      role: "Tesla owner",
+      body: "Finally, charging costs that actually make sense. The AI tips paid for the plan in a week.",
+    },
+    {
+      name: "Sofia Rivera",
+      role: "Rideshare driver",
+      body: "I log a fuel-up in 8 seconds. The mileage graphs help me drive more efficiently.",
+    },
   ];
   return (
     <section className="py-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-primary">Loved by drivers</p>
-          <h2 className="mt-3 text-4xl sm:text-5xl font-display font-semibold tracking-tight">Don't take our word for it.</h2>
+          <h2 className="mt-3 text-4xl sm:text-5xl font-display font-semibold tracking-tight">
+            Don't take our word for it.
+          </h2>
         </div>
         <div className="mt-14 grid md:grid-cols-3 gap-4">
           {items.map((t, i) => (
@@ -325,7 +388,10 @@ function Testimonials() {
               <p className="mt-4 text-sm">{t.body}</p>
               <div className="mt-5 flex items-center gap-3">
                 <div className="h-9 w-9 rounded-full bg-gradient-primary text-primary-foreground grid place-items-center text-xs font-semibold">
-                  {t.name.split(" ").map((p) => p[0]).join("")}
+                  {t.name
+                    .split(" ")
+                    .map((p) => p[0])
+                    .join("")}
                 </div>
                 <div>
                   <p className="text-sm font-medium">{t.name}</p>
@@ -342,16 +408,42 @@ function Testimonials() {
 
 function Pricing() {
   const tiers = [
-    { name: "Solo", price: "$0", period: "/mo", desc: "For one car.", features: ["1 vehicle", "Unlimited fuel logs", "Basic analytics"], cta: "Start free", featured: false },
-    { name: "Pro", price: "$9", period: "/mo", desc: "For enthusiasts.", features: ["5 vehicles", "AI insights", "Advanced analytics", "Service reminders"], cta: "Start Pro", featured: true },
-    { name: "Fleet", price: "$29", period: "/mo", desc: "For teams.", features: ["Unlimited vehicles", "Team access", "Export & API", "Priority support"], cta: "Contact us", featured: false },
+    {
+      name: "Solo",
+      price: "$0",
+      period: "/mo",
+      desc: "For one car.",
+      features: ["1 vehicle", "Unlimited fuel logs", "Basic analytics"],
+      cta: "Start free",
+      featured: false,
+    },
+    {
+      name: "Pro",
+      price: "$9",
+      period: "/mo",
+      desc: "For enthusiasts.",
+      features: ["5 vehicles", "AI insights", "Advanced analytics", "Service reminders"],
+      cta: "Start Pro",
+      featured: true,
+    },
+    {
+      name: "Fleet",
+      price: "$29",
+      period: "/mo",
+      desc: "For teams.",
+      features: ["Unlimited vehicles", "Team access", "Export & API", "Priority support"],
+      cta: "Contact us",
+      featured: false,
+    },
   ];
   return (
     <section id="pricing" className="py-24">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-primary">Pricing</p>
-          <h2 className="mt-3 text-4xl sm:text-5xl font-display font-semibold tracking-tight">Simple, transparent plans.</h2>
+          <h2 className="mt-3 text-4xl sm:text-5xl font-display font-semibold tracking-tight">
+            Simple, transparent plans.
+          </h2>
         </div>
         <div className="mt-14 grid md:grid-cols-3 gap-4">
           {tiers.map((t) => (
@@ -379,7 +471,9 @@ function Pricing() {
               </ul>
               <Button
                 className={`mt-6 w-full rounded-xl ${
-                  t.featured ? "bg-gradient-primary text-primary-foreground hover:opacity-90" : "glass"
+                  t.featured
+                    ? "bg-gradient-primary text-primary-foreground hover:opacity-90"
+                    : "glass"
                 }`}
               >
                 {t.cta}
@@ -394,17 +488,31 @@ function Pricing() {
 
 function FAQ() {
   const items = [
-    { q: "Do I need internet to log fuel?", a: "No — logs sync automatically when you're back online." },
-    { q: "Can I import data from Fuelio?", a: "Yes, we support CSV imports from most popular trackers." },
-    { q: "How does AI maintenance work?", a: "We analyze your service history and driving pattern to estimate component wear." },
-    { q: "Is my data private?", a: "Always. We never sell data, and you can export or delete everything at any time." },
+    {
+      q: "Do I need internet to log fuel?",
+      a: "No — logs sync automatically when you're back online.",
+    },
+    {
+      q: "Can I import data from Fuelio?",
+      a: "Yes, we support CSV imports from most popular trackers.",
+    },
+    {
+      q: "How does AI maintenance work?",
+      a: "We analyze your service history and driving pattern to estimate component wear.",
+    },
+    {
+      q: "Is my data private?",
+      a: "Always. We never sell data, and you can export or delete everything at any time.",
+    },
   ];
   return (
     <section id="faq" className="py-24 bg-gradient-surface">
       <div className="max-w-3xl mx-auto px-6">
         <div className="text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-primary">FAQ</p>
-          <h2 className="mt-3 text-4xl font-display font-semibold tracking-tight">Frequently asked questions</h2>
+          <h2 className="mt-3 text-4xl font-display font-semibold tracking-tight">
+            Frequently asked questions
+          </h2>
         </div>
         <div className="mt-10 space-y-3">
           {items.map((i) => (
@@ -435,16 +543,24 @@ function CTA() {
               Start driving smarter today.
             </h2>
             <p className="mt-3 text-muted-foreground max-w-xl mx-auto">
-              Join thousands of drivers using FuelMate Pro to save fuel, predict maintenance, and master their expenses.
+              Join thousands of drivers using FuelMate Pro to save fuel, predict maintenance, and
+              master their expenses.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link to="/register">
-                <Button size="lg" className="h-12 px-6 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow">
+                <Button
+                  size="lg"
+                  className="h-12 px-6 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
+                >
                   Create free account <ArrowRight className="ml-1 h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/app/dashboard">
-                <Button size="lg" variant="outline" className="h-12 px-6 rounded-xl glass border-border/60">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="h-12 px-6 rounded-xl glass border-border/60"
+                >
                   Try the demo
                 </Button>
               </Link>
@@ -461,7 +577,9 @@ function Footer() {
     <footer className="border-t border-border/40 py-10">
       <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <Logo />
-        <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} FuelMate Pro. Built for drivers who care.</p>
+        <p className="text-xs text-muted-foreground">
+          © {new Date().getFullYear()} FuelMate Pro. Built for drivers who care.
+        </p>
       </div>
     </footer>
   );

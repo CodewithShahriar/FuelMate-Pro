@@ -24,7 +24,10 @@ function Page() {
         </Row>
         <Row label="Currency">
           <select className="glass h-10 rounded-md px-3 text-sm bg-card border border-border/60">
-            <option>USD ($)</option><option>EUR (€)</option><option>GBP (£)</option>
+            <option>BDT (৳)</option>
+            <option>USD ($)</option>
+            <option>EUR (€)</option>
+            <option>GBP (£)</option>
           </select>
         </Row>
         <Row label="Theme">
@@ -46,15 +49,27 @@ function Page() {
 
       <Section title="Data" desc="Manage your data.">
         <div className="flex gap-2">
-          <Button variant="outline" className="glass border-border/60 rounded-xl">Export all data</Button>
-          <Button variant="outline" className="rounded-xl border-destructive/30 text-destructive">Delete account</Button>
+          <Button variant="outline" className="glass border-border/60 rounded-xl">
+            Export all data
+          </Button>
+          <Button variant="outline" className="rounded-xl border-destructive/30 text-destructive">
+            Delete account
+          </Button>
         </div>
       </Section>
     </div>
   );
 }
 
-function Section({ title, desc, children }: { title: string; desc: string; children: React.ReactNode }) {
+function Section({
+  title,
+  desc,
+  children,
+}: {
+  title: string;
+  desc: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="glass rounded-2xl p-6 shadow-card">
       <h3 className="font-display text-lg font-semibold">{title}</h3>

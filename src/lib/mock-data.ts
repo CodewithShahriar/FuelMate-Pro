@@ -1,4 +1,5 @@
-import { addDays, subDays, format } from "date-fns";
+import { addDays, format, parseISO } from "date-fns";
+import { fuelioFillUps, fuelioVehicle } from "./fuelio-seed";
 
 export type Vehicle = {
   id: string;
@@ -12,6 +13,7 @@ export type Vehicle = {
   image: string;
   color: string;
   healthScore: number;
+  tankCapacityLiters?: number;
 };
 
 export type FuelLog = {
@@ -23,6 +25,12 @@ export type FuelLog = {
   station: string;
   odometer: number;
   mileage: number;
+  full: boolean;
+  fuelPricePerLiter: number;
+  city: string;
+  stationId: string;
+  fuelTypeCode: string;
+  pictureCount: number;
 };
 
 export type Expense = {
@@ -43,146 +51,137 @@ export type Reminder = {
   priority: "low" | "medium" | "high";
 };
 
+const latestSeed = fuelioFillUps[fuelioFillUps.length - 1];
+const validEfficiencyLogs = fuelioFillUps.filter((log) => log.mileage > 0);
+
+function stationName(city: string, stationId: string) {
+  if (city) return city;
+  if (stationId !== "0") return `Station ${stationId}`;
+  return "Fuelio Station";
+}
+
+function monthKey(date: string) {
+  return format(parseISO(date), "yyyy-MM");
+}
+
+function monthLabel(key: string) {
+  return format(parseISO(`${key}-01`), "MMM yyyy");
+}
+
 export const vehicles: Vehicle[] = [
   {
-    id: "v1",
-    name: "Daily Driver",
-    brand: "Tesla",
-    model: "Model 3",
-    year: 2023,
-    fuelType: "Electric",
-    plate: "FUEL-001",
-    odometer: 24560,
-    image: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=800&q=80",
-    color: "Pearl White",
-    healthScore: 96,
-  },
-  {
-    id: "v2",
-    name: "Weekend Ride",
-    brand: "BMW",
-    model: "M340i",
-    year: 2022,
+    id: fuelioVehicle.id,
+    name: fuelioVehicle.name,
+    brand: fuelioVehicle.name.split(" ")[0] || "Apache",
+    model: fuelioVehicle.name.split(" ").slice(1).join(" ") || fuelioVehicle.model,
+    year: fuelioVehicle.year,
     fuelType: "Petrol",
-    plate: "FUEL-002",
-    odometer: 38120,
-    image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
-    color: "Alpine White",
-    healthScore: 88,
-  },
-  {
-    id: "v3",
-    name: "Work Truck",
-    brand: "Ford",
-    model: "F-150 Lightning",
-    year: 2024,
-    fuelType: "Electric",
-    plate: "FUEL-003",
-    odometer: 9870,
-    image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
-    color: "Antimatter Blue",
+    plate: fuelioVehicle.plate,
+    odometer: latestSeed.odometer,
+    image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&q=80",
+    color: "Black",
     healthScore: 92,
+    tankCapacityLiters: fuelioVehicle.tankCapacityLiters,
   },
 ];
 
-const stations = ["Shell V-Power", "Tesla Supercharger", "BP Ultimate", "Chevron", "EVgo Fast", "Mobil 1"];
+export const fuelLogs: FuelLog[] = fuelioFillUps
+  .slice()
+  .reverse()
+  .map((log) => ({
+    ...log,
+    vehicleId: fuelioVehicle.id,
+    station: stationName(log.city, log.stationId),
+  }));
 
-export const fuelLogs: FuelLog[] = Array.from({ length: 18 }).map((_, i) => {
-  const v = vehicles[i % vehicles.length];
-  const liters = +(28 + Math.random() * 22).toFixed(1);
-  const pricePerL = v.fuelType === "Electric" ? 0.32 : 1.65;
-  return {
-    id: `f${i + 1}`,
-    vehicleId: v.id,
-    date: format(subDays(new Date(), i * 4 + 1), "yyyy-MM-dd"),
-    liters,
-    cost: +(liters * pricePerL * (1 + Math.random() * 0.1)).toFixed(2),
-    station: stations[i % stations.length],
-    odometer: v.odometer - i * 420,
-    mileage: +(14 + Math.random() * 6).toFixed(1),
-  };
-});
-
-export const expenses: Expense[] = [
-  { id: "e1", vehicleId: "v1", category: "Insurance", amount: 1240, date: format(subDays(new Date(), 12), "yyyy-MM-dd"), notes: "Annual premium" },
-  { id: "e2", vehicleId: "v2", category: "Maintenance", amount: 380, date: format(subDays(new Date(), 6), "yyyy-MM-dd"), notes: "Oil + filters" },
-  { id: "e3", vehicleId: "v1", category: "Car Wash", amount: 45, date: format(subDays(new Date(), 3), "yyyy-MM-dd"), notes: "Premium detail" },
-  { id: "e4", vehicleId: "v3", category: "Toll", amount: 28, date: format(subDays(new Date(), 1), "yyyy-MM-dd"), notes: "Bay bridge" },
-  { id: "e5", vehicleId: "v2", category: "Repairs", amount: 920, date: format(subDays(new Date(), 24), "yyyy-MM-dd"), notes: "Brake pads + rotors" },
-  { id: "e6", vehicleId: "v3", category: "Parking", amount: 180, date: format(subDays(new Date(), 18), "yyyy-MM-dd"), notes: "Monthly garage" },
-  { id: "e7", vehicleId: "v1", category: "Maintenance", amount: 220, date: format(subDays(new Date(), 40), "yyyy-MM-dd"), notes: "Tire rotation" },
-];
+export const expenses: Expense[] = [];
 
 export const reminders: Reminder[] = [
-  { id: "r1", vehicleId: "v2", title: "Oil change due", type: "Oil Change", dueDate: format(addDays(new Date(), 4), "yyyy-MM-dd"), priority: "high" },
-  { id: "r2", vehicleId: "v1", title: "Tire rotation", type: "Tire Replacement", dueDate: format(addDays(new Date(), 12), "yyyy-MM-dd"), priority: "medium" },
-  { id: "r3", vehicleId: "v3", title: "Insurance renewal", type: "Insurance Renewal", dueDate: format(addDays(new Date(), 22), "yyyy-MM-dd"), priority: "medium" },
-  { id: "r4", vehicleId: "v2", title: "Annual inspection", type: "Inspection", dueDate: format(addDays(new Date(), 45), "yyyy-MM-dd"), priority: "low" },
+  {
+    id: "r1",
+    vehicleId: fuelioVehicle.id,
+    title: "Oil change due",
+    type: "Oil Change",
+    dueDate: format(addDays(parseISO(latestSeed.date), 14), "yyyy-MM-dd"),
+    priority: "medium",
+  },
+  {
+    id: "r2",
+    vehicleId: fuelioVehicle.id,
+    title: "Insurance renewal",
+    type: "Insurance Renewal",
+    dueDate: format(addDays(parseISO(latestSeed.date), 45), "yyyy-MM-dd"),
+    priority: "low",
+  },
 ];
 
-export const monthlyTrend = [
-  { month: "Jan", fuel: 420, expenses: 280 },
-  { month: "Feb", fuel: 510, expenses: 340 },
-  { month: "Mar", fuel: 470, expenses: 220 },
-  { month: "Apr", fuel: 620, expenses: 510 },
-  { month: "May", fuel: 580, expenses: 380 },
-  { month: "Jun", fuel: 660, expenses: 420 },
-  { month: "Jul", fuel: 720, expenses: 290 },
-  { month: "Aug", fuel: 690, expenses: 610 },
-  { month: "Sep", fuel: 540, expenses: 330 },
-];
+const monthlyMap = fuelioFillUps.reduce<
+  Record<string, { fuel: number; liters: number; count: number }>
+>((acc, log) => {
+  const key = monthKey(log.date);
+  acc[key] ??= { fuel: 0, liters: 0, count: 0 };
+  acc[key].fuel += log.cost;
+  acc[key].liters += log.liters;
+  acc[key].count += 1;
+  return acc;
+}, {});
 
-export const efficiencyTrend = [
-  { week: "W1", kmPerLiter: 16.2 },
-  { week: "W2", kmPerLiter: 17.1 },
-  { week: "W3", kmPerLiter: 15.8 },
-  { week: "W4", kmPerLiter: 18.3 },
-  { week: "W5", kmPerLiter: 17.9 },
-  { week: "W6", kmPerLiter: 19.1 },
-  { week: "W7", kmPerLiter: 18.7 },
-  { week: "W8", kmPerLiter: 20.2 },
-];
+export const monthlyTrend = Object.entries(monthlyMap).map(([key, value]) => ({
+  month: monthLabel(key),
+  fuel: +value.fuel.toFixed(2),
+  expenses: +value.fuel.toFixed(2),
+  liters: +value.liters.toFixed(3),
+  fillUps: value.count,
+}));
+
+export const efficiencyTrend = validEfficiencyLogs.slice(-8).map((log) => ({
+  week: format(parseISO(log.date), "MMM d"),
+  kmPerLiter: log.mileage,
+}));
+
+const totalFuelCost = fuelioFillUps.reduce((sum, log) => sum + log.cost, 0);
+const totalLiters = fuelioFillUps.reduce((sum, log) => sum + log.liters, 0);
+const averageEfficiency =
+  validEfficiencyLogs.reduce((sum, log) => sum + log.mileage, 0) /
+  Math.max(validEfficiencyLogs.length, 1);
 
 export const expenseBreakdown = [
-  { name: "Maintenance", value: 600, color: "oklch(0.84 0.17 88)" },
-  { name: "Insurance", value: 1240, color: "oklch(0.75 0.13 200)" },
-  { name: "Parking", value: 180, color: "oklch(0.78 0.16 155)" },
-  { name: "Toll", value: 28, color: "oklch(0.7 0.18 30)" },
-  { name: "Repairs", value: 920, color: "oklch(0.65 0.2 300)" },
-  { name: "Car Wash", value: 45, color: "oklch(0.82 0.16 70)" },
+  { name: "Fuel", value: +totalFuelCost.toFixed(2), color: "oklch(0.55 0.22 305)" },
 ];
 
 export const aiInsights = [
   {
     id: "ai1",
     type: "saving",
-    title: "Save ~$48 / month on fuel",
-    body: "Your BMW averages 14.2 km/L — driving below 70 mph on highway segments could improve efficiency by 12%.",
+    title: "Best recent efficiency",
+    body: `Your best recorded fill-up is ${Math.max(...validEfficiencyLogs.map((log) => log.mileage)).toFixed(2)} km/L from the Fuelio import.`,
   },
   {
     id: "ai2",
     type: "predict",
-    title: "Brake service likely in 6 weeks",
-    body: "Based on your driving pattern and last service interval, the front pads will reach the 3mm threshold soon.",
+    title: "Tank capacity check",
+    body: `Apache 4v tank capacity is ${fuelioVehicle.tankCapacityLiters} L. Recent fill-ups are staying within the expected range.`,
   },
   {
     id: "ai3",
     type: "alert",
-    title: "Unusual fuel cost spike",
-    body: "August spending is 38% above your 6-month average. Three top-ups happened at premium stations.",
+    title: "Fuel price changed",
+    body: `Latest fuel price is ৳${latestSeed.fuelPricePerLiter.toFixed(2)}/L, up from the early import price of ৳${fuelioFillUps[0].fuelPricePerLiter.toFixed(2)}/L.`,
   },
   {
     id: "ai4",
     type: "tip",
-    title: "Tesla tire pressure check",
-    body: "Cold mornings detected — check pressure to maintain optimal range and tire life.",
+    title: "Imported Fuelio history",
+    body: `${fuelioFillUps.length} fill-ups imported from Fuelio, covering ${format(parseISO(fuelioFillUps[0].date), "MMM yyyy")} to ${format(parseISO(latestSeed.date), "MMM yyyy")}.`,
   },
 ];
 
 export const totals = {
-  fuelCost: fuelLogs.reduce((s, l) => s + l.cost, 0),
-  monthlyExpense: expenses.reduce((s, e) => s + e.amount, 0),
-  efficiency: +(fuelLogs.reduce((s, l) => s + l.mileage, 0) / fuelLogs.length).toFixed(1),
-  mileage: vehicles.reduce((s, v) => s + v.odometer, 0),
-  health: Math.round(vehicles.reduce((s, v) => s + v.healthScore, 0) / vehicles.length),
+  fuelCost: totalFuelCost,
+  monthlyExpense: totalFuelCost,
+  efficiency: +averageEfficiency.toFixed(2),
+  mileage: latestSeed.odometer,
+  health: vehicles[0].healthScore,
+  liters: totalLiters,
+  fillUps: fuelioFillUps.length,
 };

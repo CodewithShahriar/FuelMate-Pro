@@ -1,8 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { monthlyTrend, efficiencyTrend, vehicles, fuelLogs } from "@/lib/mock-data";
 import {
-  LineChart, Line, AreaChart, Area, BarChart, Bar,
-  ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Legend,
+  LineChart,
+  Line,
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Legend,
 } from "recharts";
 import { tooltipStyle } from "./app.dashboard";
 
@@ -40,10 +50,21 @@ function Page() {
                 </linearGradient>
               </defs>
               <CartesianGrid stroke="oklch(1 0 0 / 0.05)" vertical={false} />
-              <XAxis dataKey="month" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
+              <XAxis
+                dataKey="month"
+                stroke="oklch(0.7 0.02 250)"
+                fontSize={11}
+                axisLine={false}
+                tickLine={false}
+              />
               <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
               <Tooltip contentStyle={tooltipStyle} />
-              <Area dataKey="fuel" stroke="oklch(0.84 0.17 88)" strokeWidth={2} fill="url(#aFuel)" />
+              <Area
+                dataKey="fuel"
+                stroke="oklch(0.84 0.17 88)"
+                strokeWidth={2}
+                fill="url(#aFuel)"
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -51,13 +72,29 @@ function Page() {
 
       <div className="grid lg:grid-cols-2 gap-4">
         <div className="glass rounded-2xl p-5 shadow-card">
-          <h3 className="font-display text-lg font-semibold mb-3">Vehicle comparison — efficiency</h3>
+          <h3 className="font-display text-lg font-semibold mb-3">
+            Vehicle comparison — efficiency
+          </h3>
           <div className="h-64">
             <ResponsiveContainer>
               <BarChart data={compare} layout="vertical">
                 <CartesianGrid stroke="oklch(1 0 0 / 0.05)" horizontal={false} />
-                <XAxis type="number" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
-                <YAxis type="category" dataKey="name" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} width={120} />
+                <XAxis
+                  type="number"
+                  stroke="oklch(0.7 0.02 250)"
+                  fontSize={11}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  type="category"
+                  dataKey="name"
+                  stroke="oklch(0.7 0.02 250)"
+                  fontSize={11}
+                  axisLine={false}
+                  tickLine={false}
+                  width={120}
+                />
                 <Tooltip contentStyle={tooltipStyle} />
                 <Bar dataKey="kmPerLiter" fill="oklch(0.84 0.17 88)" radius={[0, 8, 8, 0]} />
               </BarChart>
@@ -70,10 +107,26 @@ function Page() {
             <ResponsiveContainer>
               <LineChart data={efficiencyTrend}>
                 <CartesianGrid stroke="oklch(1 0 0 / 0.05)" vertical={false} />
-                <XAxis dataKey="week" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
-                <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
+                <XAxis
+                  dataKey="week"
+                  stroke="oklch(0.7 0.02 250)"
+                  fontSize={11}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  stroke="oklch(0.7 0.02 250)"
+                  fontSize={11}
+                  axisLine={false}
+                  tickLine={false}
+                />
                 <Tooltip contentStyle={tooltipStyle} />
-                <Line dataKey="kmPerLiter" stroke="oklch(0.78 0.16 155)" strokeWidth={2.5} dot={{ r: 3 }} />
+                <Line
+                  dataKey="kmPerLiter"
+                  stroke="oklch(0.78 0.16 155)"
+                  strokeWidth={2.5}
+                  dot={{ r: 3 }}
+                />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -84,8 +137,12 @@ function Page() {
         {compare.map((c) => (
           <div key={c.name} className="glass rounded-2xl p-5 shadow-card">
             <p className="text-xs text-muted-foreground">{c.name}</p>
-            <p className="mt-2 text-3xl font-display font-semibold">{c.kmPerLiter} <span className="text-sm text-muted-foreground">km/L avg</span></p>
-            <p className="text-xs text-muted-foreground mt-1">Total fuel spend: <span className="text-foreground font-medium">${c.cost}</span></p>
+            <p className="mt-2 text-3xl font-display font-semibold">
+              {c.kmPerLiter} <span className="text-sm text-muted-foreground">km/L avg</span>
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Total fuel spend: <span className="text-foreground font-medium">৳{c.cost}</span>
+            </p>
           </div>
         ))}
       </div>

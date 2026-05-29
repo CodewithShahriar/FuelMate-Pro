@@ -34,12 +34,20 @@ function Page() {
           >
             <Link to="/app/vehicles/$id" params={{ id: v.id }}>
               <div className="relative aspect-[16/10] overflow-hidden">
-                <img src={v.image} alt={`${v.brand} ${v.model}`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img
+                  src={v.image}
+                  alt={`${v.brand} ${v.model}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between">
                   <div>
-                    <p className="text-xs text-muted-foreground">{v.year} · {v.color}</p>
-                    <h3 className="font-display text-lg font-semibold">{v.brand} {v.model}</h3>
+                    <p className="text-xs text-muted-foreground">
+                      {v.year} · {v.color}
+                    </p>
+                    <h3 className="font-display text-lg font-semibold">
+                      {v.brand} {v.model}
+                    </h3>
                   </div>
                   <div className="glass-strong px-2.5 py-1 rounded-lg text-xs">
                     <span className="text-primary font-semibold">{v.healthScore}</span>

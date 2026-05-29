@@ -31,7 +31,9 @@ export function StatCard({
           <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
           <p className="mt-2 text-2xl font-display font-semibold tracking-tight">{value}</p>
         </div>
-        <div className={`h-10 w-10 rounded-xl grid place-items-center bg-gradient-primary text-primary-foreground shadow-glow`}>
+        <div
+          className={`h-10 w-10 rounded-xl grid place-items-center bg-gradient-primary text-primary-foreground shadow-glow`}
+        >
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -43,7 +45,8 @@ export function StatCard({
             <TrendingDown className="h-3.5 w-3.5 text-destructive" />
           )}
           <span className={up ? "text-[oklch(0.78_0.16_155)]" : "text-destructive"}>
-            {up ? "+" : ""}{delta}%
+            {up ? "+" : ""}
+            {delta}%
           </span>
           <span className="text-muted-foreground">vs last month</span>
         </div>

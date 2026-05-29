@@ -1,7 +1,15 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { vehicles, fuelLogs, expenses, reminders } from "@/lib/mock-data";
 import { ArrowLeft, Fuel, DollarSign, Gauge, Bell } from "lucide-react";
-import { AreaChart, Area, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
+import {
+  AreaChart,
+  Area,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from "recharts";
 import { tooltipStyle } from "./app.dashboard";
 import { format, parseISO } from "date-fns";
 
@@ -25,7 +33,10 @@ function VehiclePage() {
 
   return (
     <div className="space-y-6">
-      <Link to="/app/vehicles" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+      <Link
+        to="/app/vehicles"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+      >
         <ArrowLeft className="h-4 w-4" /> Back to garage
       </Link>
 
@@ -40,19 +51,32 @@ function VehiclePage() {
             <h1 className="mt-1 text-4xl font-display font-semibold tracking-tight">
               {v.brand} {v.model}
             </h1>
-            <p className="text-muted-foreground">{v.year} · {v.color} · {v.plate}</p>
+            <p className="text-muted-foreground">
+              {v.year} · {v.color} · {v.plate}
+            </p>
           </div>
           <div className="glass-strong rounded-2xl px-5 py-3">
             <p className="text-xs text-muted-foreground">Health score</p>
-            <p className="text-3xl font-display font-semibold text-gradient">{v.healthScore}<span className="text-muted-foreground text-lg">/100</span></p>
+            <p className="text-3xl font-display font-semibold text-gradient">
+              {v.healthScore}
+              <span className="text-muted-foreground text-lg">/100</span>
+            </p>
           </div>
         </div>
       </div>
 
       <div className="grid sm:grid-cols-4 gap-4">
         <Mini label="Odometer" value={`${v.odometer.toLocaleString()} km`} icon={Gauge} />
-        <Mini label="Total fuel" value={`$${logs.reduce((s, l) => s + l.cost, 0).toFixed(0)}`} icon={Fuel} />
-        <Mini label="Total expenses" value={`$${exps.reduce((s, e) => s + e.amount, 0).toFixed(0)}`} icon={DollarSign} />
+        <Mini
+          label="Total fuel"
+          value={`৳${logs.reduce((s, l) => s + l.cost, 0).toFixed(0)}`}
+          icon={Fuel}
+        />
+        <Mini
+          label="Total expenses"
+          value={`৳${exps.reduce((s, e) => s + e.amount, 0).toFixed(0)}`}
+          icon={DollarSign}
+        />
         <Mini label="Reminders" value={`${rems.length}`} icon={Bell} />
       </div>
 
@@ -68,10 +92,22 @@ function VehiclePage() {
                 </linearGradient>
               </defs>
               <CartesianGrid stroke="oklch(1 0 0 / 0.05)" vertical={false} />
-              <XAxis dataKey="date" stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
+              <XAxis
+                dataKey="date"
+                stroke="oklch(0.7 0.02 250)"
+                fontSize={11}
+                axisLine={false}
+                tickLine={false}
+              />
               <YAxis stroke="oklch(0.7 0.02 250)" fontSize={11} axisLine={false} tickLine={false} />
               <Tooltip contentStyle={tooltipStyle} />
-              <Area type="monotone" dataKey="kmPerLiter" stroke="oklch(0.84 0.17 88)" strokeWidth={2} fill="url(#gKmPerLiter)" />
+              <Area
+                type="monotone"
+                dataKey="kmPerLiter"
+                stroke="oklch(0.84 0.17 88)"
+                strokeWidth={2}
+                fill="url(#gKmPerLiter)"
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -85,9 +121,11 @@ function VehiclePage() {
               <div key={l.id} className="py-2.5 flex items-center justify-between text-sm">
                 <div>
                   <p className="font-medium">{l.station}</p>
-                  <p className="text-xs text-muted-foreground">{format(parseISO(l.date), "MMM d")} · {l.liters}L</p>
+                  <p className="text-xs text-muted-foreground">
+                    {format(parseISO(l.date), "MMM d")} · {l.liters}L
+                  </p>
                 </div>
-                <p className="font-display font-semibold">${l.cost.toFixed(2)}</p>
+                <p className="font-display font-semibold">৳{l.cost.toFixed(2)}</p>
               </div>
             ))}
           </div>

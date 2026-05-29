@@ -22,7 +22,9 @@ function ForgotPage() {
       footer={
         <>
           Remembered it?{" "}
-          <Link to="/login" className="text-primary hover:underline">Sign in</Link>
+          <Link to="/login" className="text-primary hover:underline">
+            Sign in
+          </Link>
         </>
       }
     >
@@ -33,16 +35,26 @@ function ForgotPage() {
       ) : (
         <form
           className="space-y-4"
-          onSubmit={(e) => { e.preventDefault(); setSent(true); }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            setSent(true);
+          }}
         >
           <div>
             <label className="text-xs text-muted-foreground">Email</label>
             <div className="mt-1 relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input className="pl-9 h-11 glass border-border/60" type="email" placeholder="you@example.com" />
+              <Input
+                className="pl-9 h-11 glass border-border/60"
+                type="email"
+                placeholder="you@example.com"
+              />
             </div>
           </div>
-          <Button type="submit" className="w-full h-11 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow">
+          <Button
+            type="submit"
+            className="w-full h-11 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
+          >
             Send reset link
           </Button>
         </form>

@@ -36,16 +36,33 @@ function Page() {
           </div>
           <div className="flex-1">
             <p className="text-sm text-muted-foreground">Ask me anything</p>
-            <h2 className="font-display text-2xl font-semibold mt-1">How can I help you drive smarter today?</h2>
+            <h2 className="font-display text-2xl font-semibold mt-1">
+              How can I help you drive smarter today?
+            </h2>
             <form className="mt-5 flex gap-2" onSubmit={(e) => e.preventDefault()}>
-              <Input className="glass h-12 border-border/60" placeholder="e.g. Why did my fuel cost spike in August?" />
-              <Button type="submit" className="h-12 px-5 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow">
+              <Input
+                className="glass h-12 border-border/60"
+                placeholder="e.g. Why did my fuel cost spike in August?"
+              />
+              <Button
+                type="submit"
+                className="h-12 px-5 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
+              >
                 <Send className="h-4 w-4" />
               </Button>
             </form>
             <div className="mt-3 flex flex-wrap gap-2">
-              {["Predict my next service", "Best km/L driver in the fleet", "Reduce monthly fuel cost"].map((s) => (
-                <button key={s} className="text-xs glass rounded-full px-3 py-1.5 hover:bg-accent/10">{s}</button>
+              {[
+                "Predict my next service",
+                "Best km/L driver in the fleet",
+                "Reduce monthly fuel cost",
+              ].map((s) => (
+                <button
+                  key={s}
+                  className="text-xs glass rounded-full px-3 py-1.5 hover:bg-accent/10"
+                >
+                  {s}
+                </button>
               ))}
             </div>
           </div>

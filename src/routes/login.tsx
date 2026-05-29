@@ -21,7 +21,9 @@ function LoginPage() {
       footer={
         <>
           Don't have an account?{" "}
-          <Link to="/register" className="text-primary hover:underline">Create one</Link>
+          <Link to="/register" className="text-primary hover:underline">
+            Create one
+          </Link>
         </>
       }
     >
@@ -38,13 +40,19 @@ function LoginPage() {
           <label className="flex items-center gap-2 text-muted-foreground">
             <input type="checkbox" className="accent-primary" /> Remember me
           </label>
-          <Link to="/forgot-password" className="text-primary hover:underline">Forgot?</Link>
+          <Link to="/forgot-password" className="text-primary hover:underline">
+            Forgot?
+          </Link>
         </div>
-        <Button type="submit" className="w-full h-11 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow">
+        <Button
+          type="submit"
+          className="w-full h-11 rounded-xl bg-gradient-primary text-primary-foreground hover:opacity-90 shadow-glow"
+        >
           Sign in
         </Button>
         <div className="flex items-center gap-3 text-xs text-muted-foreground">
-          <div className="flex-1 h-px bg-border" /> or continue with <div className="flex-1 h-px bg-border" />
+          <div className="flex-1 h-px bg-border" /> or continue with{" "}
+          <div className="flex-1 h-px bg-border" />
         </div>
         <SocialRow />
       </form>
