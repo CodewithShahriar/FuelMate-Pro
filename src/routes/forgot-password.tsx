@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { AuthShell } from "@/components/AuthShell";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -6,6 +6,9 @@ import { Mail } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/forgot-password")({
+  beforeLoad: () => {
+    throw redirect({ to: "/app/dashboard" });
+  },
   head: () => ({ meta: [{ title: "Reset password — FuelMate Pro" }] }),
   component: ForgotPage,
 });

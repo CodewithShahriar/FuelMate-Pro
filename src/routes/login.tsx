@@ -1,10 +1,13 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useNavigate } from "@tanstack/react-router";
 import { AuthShell, SocialRow } from "@/components/AuthShell";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Mail, Lock } from "lucide-react";
 
 export const Route = createFileRoute("/login")({
+  beforeLoad: () => {
+    throw redirect({ to: "/app/dashboard" });
+  },
   head: () => ({ meta: [{ title: "Sign in — FuelMate Pro" }] }),
   component: LoginPage,
 });

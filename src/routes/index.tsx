@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import {
@@ -17,6 +17,9 @@ import { Logo } from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
+  beforeLoad: () => {
+    throw redirect({ to: "/app/dashboard" });
+  },
   head: () => ({
     meta: [
       { title: "FuelMate Pro — AI-powered vehicle, fuel & expense management" },
