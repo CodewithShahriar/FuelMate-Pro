@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { FuelioFillUpSeed } from "@/lib/fuelio-seed";
+import { uploadFillUpsToCloud } from "@/lib/supabase-client";
 
 interface AddFillUpModalProps {
   isOpen: boolean;
@@ -100,7 +101,7 @@ export function AddFillUpModal({
     const calculatedMileage =
       distanceSinceLast > 0 && litersNum > 0 ? +(distanceSinceLast / litersNum).toFixed(2) : 43.5;
 
-    onSave({
+    const newRecord = {
       date: dateStr,
       odometer: odoNum,
       liters: litersNum,
@@ -115,7 +116,14 @@ export function AddFillUpModal({
       fuelTypeName: fuelType,
       pictureCount: hasPhoto ? 1 : 0,
       notes,
-    });
+    };
+
+    onSave(newRecord);
+
+    // Auto-sync to Supabase Cloud in background
+    uploadFillUpsToCloud([newRecord]).catch((err) =>
+      console.warn("Background Supabase sync notice:", err)
+    );
 
     // Reset clean
     setOdometer("");

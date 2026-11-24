@@ -27,8 +27,8 @@ create table if not exists public.vehicles (
 
 create table if not exists public.fuel_logs (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
-  vehicle_id uuid not null references public.vehicles(id) on delete cascade,
+  user_id uuid references auth.users(id) on delete cascade,
+  vehicle_id uuid references public.vehicles(id) on delete cascade,
   date date not null,
   liters numeric(10,2) not null,
   cost numeric(10,2) not null,
@@ -40,7 +40,7 @@ create table if not exists public.fuel_logs (
 
 create table if not exists public.expenses (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references auth.users(id) on delete cascade,
+  user_id uuid references auth.users(id) on delete cascade,
   vehicle_id uuid references public.vehicles(id) on delete cascade,
   category text not null,
   amount numeric(10,2) not null,
