@@ -1,13 +1,30 @@
 // Lightweight, zero-dependency Supabase REST Client
 // Connects directly to PostgREST with instant sync & offline resilience
 
-const SUPABASE_URL =
-  (typeof import.meta !== "undefined" && import.meta.env?.VITE_SUPABASE_URL) ||
-  "https://kcuhrkwiuhhnaxwaesnn.supabase.co";
+function cleanHeaderValue(val: any): string {
+  if (!val) return "";
+  return String(val)
+    .replace(/^["'\s]+|["'\s]+$/g, "") // strip surrounding quotes, spaces, newlines
+    .replace(/[\r\n\t]/g, "")
+    .trim();
+}
 
-const SUPABASE_ANON_KEY =
+function cleanBaseUrl(val: any): string {
+  const cleaned = cleanHeaderValue(val);
+  if (!cleaned) return "https://kcuhrkwiuhhnaxwaesnn.supabase.co";
+  // Remove trailing slashes and /rest/v1 if inadvertently appended
+  return cleaned.replace(/\/+$/, "").replace(/\/rest\/v1\/?$/, "");
+}
+
+const SUPABASE_URL = cleanBaseUrl(
+  (typeof import.meta !== "undefined" && import.meta.env?.VITE_SUPABASE_URL) ||
+  "https://kcuhrkwiuhhnaxwaesnn.supabase.co"
+);
+
+const SUPABASE_ANON_KEY = cleanHeaderValue(
   (typeof import.meta !== "undefined" && import.meta.env?.VITE_SUPABASE_ANON_KEY) ||
-  "sb_publishable_uAGeAYK0cdLTiXaX6C7lOA_mLqElc0x";
+  "sb_publishable_uAGeAYK0cdLTiXaX6C7lOA_mLqElc0x"
+);
 
 export const supabaseConfig = {
   url: SUPABASE_URL,
@@ -23,17 +40,27 @@ export async function supabaseFetch<T = any>(
     return { data: null, error: new Error("Supabase is not configured") };
   }
 
-  const cleanBase = SUPABASE_URL.replace(/\/$/, "");
   const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
-  const url = `${cleanBase}/rest/v1${cleanEndpoint}`;
+  const url = `${SUPABASE_URL}/rest/v1${cleanEndpoint}`;
 
-  const headers: HeadersInit = {
-    apikey: SUPABASE_ANON_KEY,
-    Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+  const cleanKey = cleanHeaderValue(SUPABASE_ANON_KEY);
+  const headers: Record<string, string> = {
+    apikey: cleanKey,
+    Authorization: `Bearer ${cleanKey}`,
     "Content-Type": "application/json",
-    Prefer: "return=representation",
-    ...(options.headers || {}),
   };
+
+  // Safely sanitize and merge any custom headers
+  if (options.headers) {
+    try {
+      const extra = options.headers as Record<string, string>;
+      for (const [k, v] of Object.entries(extra)) {
+        headers[cleanHeaderValue(k)] = cleanHeaderValue(v);
+      }
+    } catch (e) {
+      // Ignore header merge error
+    }
+  }
 
   try {
     const res = await fetch(url, {
