@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useRef } from "react";
 import {
   Settings,
@@ -13,9 +13,13 @@ import {
   AlertCircle,
   Database,
   ExternalLink,
+  User,
+  LogOut,
+  LogIn,
 } from "lucide-react";
 import { useFuelData } from "@/lib/fuel-store";
 import { useExpenseData } from "@/lib/expense-store";
+import { useAuth } from "@/lib/auth-store";
 import {
   supabaseConfig,
   uploadFillUpsToCloud,
@@ -32,6 +36,7 @@ export const Route = createFileRoute("/app/settings")({
 export function SettingsPage() {
   const { stats, vehicle, fillUps, resetToDefault } = useFuelData();
   const { expenses } = useExpenseData();
+  const { user, isAuthenticated, signOut } = useAuth();
   const [resetDone, setResetDone] = useState(false);
   const [syncStatus, setSyncStatus] = useState<string | null>(null);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -112,6 +117,41 @@ export function SettingsPage() {
         <h1 className="text-xl font-black tracking-tight">More & Settings</h1>
         <p className="text-xs text-neutral-400">Manage cloud sync, data & vehicle specs</p>
       </header>
+
+      {/* Account & Profile Card */}
+      <div className="p-4 rounded-[24px] bg-[#141824] border border-white/10 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400 font-bold text-sm">
+            {isAuthenticated ? (user?.fullName?.[0] || user?.email?.[0] || "U").toUpperCase() : <User className="w-5 h-5" />}
+          </div>
+          <div>
+            <h3 className="text-xs font-bold text-white">
+              {isAuthenticated ? (user?.fullName || user?.email?.split("@")[0]) : "Guest Mode (Local Device)"}
+            </h3>
+            <p className="text-[11px] text-neutral-400">
+              {isAuthenticated ? user?.email : "Data saved on this device only"}
+            </p>
+          </div>
+        </div>
+
+        {isAuthenticated ? (
+          <button
+            onClick={() => signOut()}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 text-xs text-neutral-300 hover:text-red-400 transition-colors"
+          >
+            <LogOut className="w-3.5 h-3.5" />
+            <span>Sign out</span>
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold text-xs shadow-[0_0_15px_rgba(0,213,255,0.3)] hover:opacity-95 transition-opacity"
+          >
+            <LogIn className="w-3.5 h-3.5" />
+            <span>Sign in</span>
+          </Link>
+        )}
+      </div>
 
       {/* Supabase Cloud Live Sync Card */}
       <div className="p-4 rounded-[26px] bg-gradient-to-br from-[#0e1726] to-[#070d18] border border-cyan-500/30 shadow-[0_0_25px_rgba(0,213,255,0.08)] space-y-3.5">

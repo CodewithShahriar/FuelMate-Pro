@@ -3,6 +3,8 @@ import path from "path";
 
 const routes = [
   "/",
+  "/login",
+  "/register",
   "/app/dashboard",
   "/app/fuel",
   "/app/calculator",
