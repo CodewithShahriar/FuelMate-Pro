@@ -68,18 +68,23 @@ alter table public.expenses enable row level security;
 alter table public.reminders enable row level security;
 
 -- Policies: each user can only see and modify their own rows
+drop policy if exists "Own profile" on public.profiles;
 create policy "Own profile" on public.profiles
   for all using (auth.uid() = id) with check (auth.uid() = id);
 
+drop policy if exists "Own vehicles" on public.vehicles;
 create policy "Own vehicles" on public.vehicles
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "Own fuel logs" on public.fuel_logs;
 create policy "Own fuel logs" on public.fuel_logs
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "Own expenses" on public.expenses;
 create policy "Own expenses" on public.expenses
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
+drop policy if exists "Own reminders" on public.reminders;
 create policy "Own reminders" on public.reminders
   for all using (auth.uid() = user_id) with check (auth.uid() = user_id);
 
