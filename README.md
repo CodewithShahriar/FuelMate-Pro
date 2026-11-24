@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>Next-Generation Mobile HUD & Smart Vehicle Telemetry Tracker</strong><br />
-  A high-precision, mobile-first fuel efficiency, trip calculator, and bike maintenance ecosystem built with React 19, TanStack Router, and Tailwind CSS v4.
+  A high-precision, mobile-first fuel efficiency, trip calculator, and bike maintenance ecosystem built with React 19, TanStack Router, Tailwind CSS v4, and Supabase Cloud.
 </p>
 
 <p align="center">
@@ -10,6 +10,7 @@
   <img src="https://img.shields.io/badge/Vite-8.0-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 8" />
   <img src="https://img.shields.io/badge/TanStack_Router-Enabled-FF4154?style=for-the-badge&logo=tanstack&logoColor=white" alt="TanStack Router" />
   <img src="https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS v4" />
+  <img src="https://img.shields.io/badge/Supabase-Cloud_Auth_&_DB-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
   <img src="https://img.shields.io/badge/UI_Theme-OLED_Cyberpunk-00e5ff?style=for-the-badge" alt="OLED Dark Theme" />
   <img src="https://img.shields.io/badge/Platform-PWA_&_Mobile_First-emerald?style=for-the-badge" alt="Mobile First" />
 </p>
@@ -58,9 +59,20 @@
 - **Categorized Ownership Expenses:** Log and filter by Engine Oil, Chain Lube, Brake Pads, Battery, BRTA Tax Token renewals, and repairs.
 - **Full CRUD Persistence:** Add, view, edit, and delete any maintenance record with instantaneous `localStorage` synchronization.
 
-### 📊 5. Comprehensive Analytics & Stats
+### ☁️ 5. Supabase Cloud Sync & Multi-Tenant Authentication
+- **Multi-Device Instant Sync:** Access your motorcycle telemetry from any smartphone, tablet, or PC with zero data loss.
+- **Private User Accounts:** Email/Password authentication powered by Supabase GoTrue Auth.
+- **Auto-Data Migration:** Existing historical records (including the 46 Fuelio logs) are automatically linked to your personal cloud account upon signing up.
+- **Multi-Tenant Privacy:** Multiple riders can create individual accounts; Row-Level Security (RLS) guarantees complete data isolation.
+- **Guest / Offline Mode:** The app operates seamlessly even without login, storing everything offline in localStorage.
+
+### 📊 6. Comprehensive Analytics & Stats
 - **Fuelio Precision:** 3 dedicated tabs for **Fill-ups**, **Costs**, and **Distance**.
 - **Historical Comparison:** Current month vs. previous month, year-to-date tracking, and daily riding averages.
+
+### ⚡ 7. Bulletproof Static Pre-Rendering & PWA
+- **Zero 404s on Refresh:** Automated build pipeline pre-renders static HTML for all app routes (`/app/fuel`, `/app/calculator`, `/app/expenses`, `/login`, `/register`).
+- **iOS Safari Compatible:** Sanitized HTTP headers and REST requests guarantee smooth operations on Apple WebKit and Chrome.
 
 ---
 
@@ -72,10 +84,10 @@
 | **Routing** | [@tanstack/react-router](https://tanstack.com/router) (Code-based type-safe routes) |
 | **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) with pure CSS `@theme` variables |
 | **Theme** | OLED Obsidian (`#06070a`) with Cyberpunk Cyan & Emerald neon accents |
+| **Backend & Database** | [Supabase](https://supabase.com/) (PostgreSQL + PostgREST + GoTrue Auth) |
 | **Icons** | [Lucide React](https://lucide.dev/) |
 | **Animations** | [Framer Motion](https://www.framer.com/motion/) |
-| **State & Storage** | LocalStorage reactive custom hooks with instant seed hydration |
-| **Backend Ready** | Supabase database schema & RLS policies included in `/supabase` |
+| **State Architecture** | Local-First with Background Cloud Synchronization |
 
 ---
 
@@ -93,16 +105,23 @@ npm install
 bun install
 ```
 
-### 2. Run Locally
+### 2. Configure Environment Variables (Optional for Cloud Sync)
+Create a `.env` file in the project root:
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-publishable-key
+```
+
+### 3. Run Locally
 ```bash
 npm run dev
 # or
 bun run dev
 ```
 
-Navigate to `http://localhost:5173` in your browser. The application runs immediately in high-fidelity mock/seed mode with 46 real historical motorcycle logs.
+Navigate to `http://localhost:5173` in your browser. The application runs immediately with full offline support and rich vehicle seeds.
 
-### 3. Production Build
+### 4. Production Build & Static Pre-render
 ```bash
 npm run build
 ```
@@ -123,6 +142,8 @@ npm run build
 ├── images/                   # High-res UI showcase screenshots
 │   ├── dashboard-hud.jpg     # Cockpit HUD preview
 │   └── costs-service.jpg     # Costs & maintenance preview
+├── scripts/
+│   └── generate-html.mjs     # Pre-render static generator for zero-404 SPA routing
 ├── src/
 │   ├── components/           # Reusable UI components
 │   │   ├── AddFillUpModal.tsx# Reactive fuel logging dialog
@@ -130,6 +151,8 @@ npm run build
 │   │   ├── Logo.tsx          # Branding SVG
 │   │   └── ui/               # Base primitives (dialogs, inputs, badges)
 │   ├── lib/
+│   │   ├── auth-store.ts     # Supabase GoTrue auth client & auto-migration
+│   │   ├── supabase-client.ts# Zero-dependency PostgREST sync client
 │   │   ├── fuel-store.ts     # Fill-up state manager with localStorage sync
 │   │   ├── expense-store.ts  # Maintenance state manager
 │   │   └── fuelio-seed.ts    # Seed data (46 fill-up logs & vehicle specs)
@@ -139,11 +162,14 @@ npm run build
 │   │   ├── app.calculator.tsx# 4-mode Fuel & Trip Calculator
 │   │   ├── app.expenses.tsx  # Maintenance tracker with CRUD
 │   │   ├── app.stats.tsx     # 3-Tab deep analytics
-│   │   └── app.settings.tsx  # Configuration & CSV data management
+│   │   ├── app.settings.tsx  # Cloud sync, account & preferences
+│   │   ├── login.tsx         # User sign-in screen
+│   │   └── register.tsx      # User account creation screen
 │   ├── styles.css            # OLED dark theme & custom input scrollbar styles
 │   └── router.tsx            # TanStack Router instance
 ├── supabase/
-│   └── schema.sql            # Optional cloud SQL schema & RLS policies
+│   └── schema.sql            # PostgreSQL schema, RLS policies & triggers
+├── vercel.json               # SPA routing & deployment configuration
 └── package.json
 ```
 
