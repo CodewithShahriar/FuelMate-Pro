@@ -91,43 +91,6 @@
 
 ---
 
-## 🚀 Quick Start
-
-### Prerequisites
-- Node.js 18+ or [Bun](https://bun.sh/)
-
-### 1. Clone & Install
-```bash
-git clone https://github.com/your-username/fuelmate-pro.git
-cd "FuelMate Pro"
-npm install
-# or
-bun install
-```
-
-### 2. Configure Environment Variables (Optional for Cloud Sync)
-Create a `.env` file in the project root:
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-supabase-publishable-key
-```
-
-### 3. Run Locally
-```bash
-npm run dev
-# or
-bun run dev
-```
-
-Navigate to `http://localhost:5173` in your browser. The application runs immediately with full offline support and rich vehicle seeds.
-
-### 4. Production Build & Static Pre-render
-```bash
-npm run build
-```
-
----
-
 ## 📱 Mobile-First Architecture
 
 - **Desktop Experience:** Renders inside a clean, centered mobile device frame (`max-w-[430px]`) with an optional **"Expand Fullscreen"** switch on the header.
