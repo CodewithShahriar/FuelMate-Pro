@@ -77,7 +77,7 @@ export function DashboardPage() {
             <div className="flex items-center gap-1.5">
               <h1 className="text-lg font-black tracking-tight text-white">FuelMate</h1>
               <span className="text-[9px] uppercase font-bold tracking-widest px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
-                PRO HUD
+                PRO
               </span>
             </div>
             <p className="text-[11px] text-neutral-400 font-medium">TVS Apache RTR 160 4V</p>
