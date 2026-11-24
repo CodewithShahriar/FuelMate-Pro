@@ -120,9 +120,6 @@ export function DashboardPage() {
               <span className="text-xl">🏍️</span>
               <div>
                 <span className="text-xs font-bold text-white tracking-wide">APACHE 4V</span>
-                <span className="ml-2 text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">
-                  {vehicle.plate}
-                </span>
               </div>
             </div>
             <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30 flex items-center gap-1">

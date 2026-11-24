@@ -67,9 +67,11 @@ export function SettingsPage() {
               <p className="text-xs text-neutral-400">TVS Apache RTR 160 4V (2020)</p>
             </div>
           </div>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-            {vehicle.plate}
-          </span>
+          {vehicle.plate ? (
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+              {vehicle.plate}
+            </span>
+          ) : null}
         </div>
 
         <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/5 text-center">

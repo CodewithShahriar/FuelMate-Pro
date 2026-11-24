@@ -34,7 +34,7 @@ export const fuelioVehicle: FuelioVehicleSeed = {
   id: "apache-4v",
   name: "Apache 4v",
   description: "TVS Apache RTR 160 4V",
-  plate: "11-5088",
+  plate: "",
   make: "TVS",
   model: "2020",
   year: 2020,

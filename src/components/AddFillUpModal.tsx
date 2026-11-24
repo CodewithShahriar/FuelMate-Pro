@@ -175,7 +175,7 @@ export function AddFillUpModal({
                 <span className="text-xl">🏍️</span>
                 <div>
                   <p className="text-sm font-semibold text-white">Apache 4v</p>
-                  <p className="text-[11px] text-neutral-400">12L Tank · Plate 11-5088</p>
+                  <p className="text-[11px] text-neutral-400">12L Fuel Tank · 2.5L Reserve</p>
                 </div>
               </div>
               <span className="text-[11px] font-mono font-medium text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded-full border border-cyan-500/20">
