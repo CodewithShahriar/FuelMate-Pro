@@ -23,6 +23,7 @@ import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppFuelRouteImport } from './routes/app.fuel'
 import { Route as AppExpensesRouteImport } from './routes/app.expenses'
 import { Route as AppDashboardRouteImport } from './routes/app.dashboard'
+import { Route as AppCalculatorRouteImport } from './routes/app.calculator'
 import { Route as AppAssistantRouteImport } from './routes/app.assistant'
 import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
 import { Route as AppVehiclesIdRouteImport } from './routes/app.vehicles.$id'
@@ -97,6 +98,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCalculatorRoute = AppCalculatorRouteImport.update({
+  id: '/calculator',
+  path: '/calculator',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppAssistantRoute = AppAssistantRouteImport.update({
   id: '/assistant',
   path: '/assistant',
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/assistant': typeof AppAssistantRoute
+  '/app/calculator': typeof AppCalculatorRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/expenses': typeof AppExpensesRoute
   '/app/fuel': typeof AppFuelRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/assistant': typeof AppAssistantRoute
+  '/app/calculator': typeof AppCalculatorRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/expenses': typeof AppExpensesRoute
   '/app/fuel': typeof AppFuelRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/assistant': typeof AppAssistantRoute
+  '/app/calculator': typeof AppCalculatorRoute
   '/app/dashboard': typeof AppDashboardRoute
   '/app/expenses': typeof AppExpensesRoute
   '/app/fuel': typeof AppFuelRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/app/analytics'
     | '/app/assistant'
+    | '/app/calculator'
     | '/app/dashboard'
     | '/app/expenses'
     | '/app/fuel'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/app/analytics'
     | '/app/assistant'
+    | '/app/calculator'
     | '/app/dashboard'
     | '/app/expenses'
     | '/app/fuel'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/app/analytics'
     | '/app/assistant'
+    | '/app/calculator'
     | '/app/dashboard'
     | '/app/expenses'
     | '/app/fuel'
@@ -339,6 +351,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/calculator': {
+      id: '/app/calculator'
+      path: '/calculator'
+      fullPath: '/app/calculator'
+      preLoaderRoute: typeof AppCalculatorRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/assistant': {
       id: '/app/assistant'
       path: '/assistant'
@@ -378,6 +397,7 @@ const AppVehiclesRouteWithChildren = AppVehiclesRoute._addFileChildren(
 interface AppRouteChildren {
   AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppAssistantRoute: typeof AppAssistantRoute
+  AppCalculatorRoute: typeof AppCalculatorRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppExpensesRoute: typeof AppExpensesRoute
   AppFuelRoute: typeof AppFuelRoute
@@ -392,6 +412,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAnalyticsRoute: AppAnalyticsRoute,
   AppAssistantRoute: AppAssistantRoute,
+  AppCalculatorRoute: AppCalculatorRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppExpensesRoute: AppExpensesRoute,
   AppFuelRoute: AppFuelRoute,
