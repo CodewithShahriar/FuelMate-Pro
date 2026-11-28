@@ -27,7 +27,7 @@ export function AppShell() {
   const [isMobileFrameMode, setIsMobileFrameMode] = useState(true);
 
   return (
-    <div className="min-h-screen w-full bg-[#07090e] text-foreground flex flex-col items-center justify-start antialiased relative selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="h-[100dvh] sm:h-auto sm:min-h-screen w-full bg-[#07090e] text-foreground flex flex-col items-center justify-start antialiased relative selection:bg-cyan-500/30 selection:text-cyan-200 overflow-hidden sm:overflow-visible">
       {/* Background ambient lighting */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-cyan-500/8 rounded-full blur-[140px]" />
@@ -62,7 +62,7 @@ export function AppShell() {
           {/* Toggle between Mobile Simulator and Expanded Desktop view */}
           <button
             onClick={() => setIsMobileFrameMode((prev) => !prev)}
-            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-cyan-400 transition-all shadow-sm"
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-cyan-400 transition-all shadow-sm cursor-pointer"
             title="Toggle Desktop / Mobile Screen Frame"
           >
             {isMobileFrameMode ? (
@@ -80,16 +80,19 @@ export function AppShell() {
         </div>
       </header>
 
-      {/* Main Container: Mobile Frame on Desktop or Fullscreen */}
+      {/* Main Container: Mobile Frame on Desktop or Fullscreen Mobile */}
       <div
-        className={`relative z-10 w-full transition-all duration-300 ${
+        className={`relative z-10 w-full flex-1 flex flex-col min-h-0 transition-all duration-300 ${
           isMobileFrameMode
-            ? "sm:my-6 sm:max-w-[430px] sm:min-h-[850px] sm:max-h-[92vh] sm:rounded-[36px] sm:border sm:border-white/10 sm:shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_40px_rgba(0,213,255,0.12)] sm:overflow-hidden sm:flex sm:flex-col bg-[#0b0d14]"
-            : "w-full max-w-4xl p-2 sm:p-6"
+            ? "sm:my-6 sm:max-w-[430px] sm:h-[880px] sm:max-h-[92vh] sm:rounded-[36px] sm:border sm:border-white/10 sm:shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_40px_rgba(0,213,255,0.12)] sm:overflow-hidden sm:flex sm:flex-col bg-[#0b0d14]"
+            : "w-full max-w-4xl p-2 sm:p-6 sm:h-auto sm:overflow-visible"
         }`}
       >
-        {/* Scrollable Viewport */}
-        <main className="flex-1 overflow-y-auto px-4 pt-3 pb-24 scroll-smooth">
+        {/* Scrollable Viewport with iOS safe-area insets & smooth momentum scroll */}
+        <main
+          className="flex-1 w-full overflow-y-auto overflow-x-hidden px-4 pt-[max(0.75rem,env(safe-area-inset-top,0px))] pb-[calc(5.75rem+env(safe-area-inset-bottom,0px))] scroll-smooth overscroll-contain"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={pathname}
@@ -103,9 +106,9 @@ export function AppShell() {
           </AnimatePresence>
         </main>
 
-        {/* Floating Bottom Navigation Bar (Fuelio-style Glass Tabbar) */}
+        {/* Floating Bottom Navigation Bar (Elevated above iOS Home Indicator bar) */}
         <nav
-          className={`fixed sm:absolute bottom-3 inset-x-3 z-50 mx-auto max-w-[400px] rounded-[28px] border border-white/10 bg-[#121622]/90 px-2 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(0,213,255,0.08)] backdrop-blur-2xl`}
+          className="fixed sm:absolute bottom-[max(0.75rem,calc(env(safe-area-inset-bottom,0px)+0.25rem))] inset-x-3 z-50 mx-auto max-w-[400px] rounded-[28px] border border-white/10 bg-[#121622]/90 px-2 py-1.5 shadow-[0_12px_40px_rgba(0,0,0,0.8),0_0_20px_rgba(0,213,255,0.08)] backdrop-blur-2xl"
         >
           <div className="grid grid-cols-5 gap-1 items-center">
             {bottomNav.map((item) => {

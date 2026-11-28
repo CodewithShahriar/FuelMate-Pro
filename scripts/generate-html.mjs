@@ -22,6 +22,12 @@ async function generateAllRoutes() {
       fs.mkdirSync(clientDir, { recursive: true });
     }
 
+    // Ensure public assets (manifest, icons, favicon) are copied to dist/client
+    const publicDir = path.resolve("public");
+    if (fs.existsSync(publicDir)) {
+      fs.cpSync(publicDir, clientDir, { recursive: true });
+    }
+
     // First generate main index.html using /app/dashboard
     const defaultRes = await serverModule.default.fetch(
       new Request("http://localhost/app/dashboard"),

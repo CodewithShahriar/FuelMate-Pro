@@ -1,0 +1,89 @@
+import fs from "fs";
+import path from "path";
+import sharp from "sharp";
+
+const publicDir = path.resolve("public");
+const iconsDir = path.join(publicDir, "icons");
+
+if (!fs.existsSync(iconsDir)) {
+  fs.mkdirSync(iconsDir, { recursive: true });
+}
+
+// SVG source with neon cyber fuel gauge and spark
+const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0e17" />
+      <stop offset="50%" stop-color="#07090e" />
+      <stop offset="100%" stop-color="#040508" />
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.6" />
+      <stop offset="50%" stop-color="#38ef7d" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#111827" stop-opacity="0.4" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="14" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background squircle -->
+  <rect x="16" y="16" width="480" height="480" rx="108" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="6" />
+
+  <!-- Subtle glow aura -->
+  <circle cx="256" cy="240" r="140" fill="#00f2fe" opacity="0.08" filter="url(#glow)" />
+
+  <!-- Fuel pump body & nozzle modern iconography -->
+  <g transform="translate(116, 106)" stroke="url(#cyanGrad)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- Pump Station Body -->
+    <rect x="20" y="40" width="160" height="240" rx="28" fill="#121724" stroke="url(#cyanGrad)" stroke-width="18" />
+    <!-- Glass HUD Screen -->
+    <rect x="46" y="76" width="108" height="66" rx="14" fill="#080a10" stroke="#00f2fe" stroke-width="6" />
+    <!-- Mini Fuel line on HUD -->
+    <path d="M62 108 L95 108 L110 94 L138 94" stroke="#00f2fe" stroke-width="6" />
+    
+    <!-- Hose & Handle -->
+    <path d="M180 84 C225 84, 255 130, 255 190 L255 230 C255 245, 245 255, 230 255 C215 255, 205 245, 205 230 L205 160 C205 145, 215 135, 230 135 L255 135" stroke="url(#cyanGrad)" stroke-width="14" />
+    <path d="M255 120 L275 90" stroke="#38ef7d" stroke-width="14" />
+  </g>
+
+  <!-- PRO badge at bottom -->
+  <g transform="translate(196, 388)">
+    <rect x="0" y="0" width="120" height="42" rx="12" fill="#00f2fe" opacity="0.15" stroke="#00f2fe" stroke-width="2.5" />
+    <text x="60" y="27" fill="#00f2fe" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="20" font-weight="900" text-anchor="middle" letter-spacing="4">PRO</text>
+  </g>
+</svg>`;
+
+// Write public/favicon.svg
+fs.writeFileSync(path.join(publicDir, "favicon.svg"), svgIcon);
+
+async function generatePngs() {
+  const svgBuffer = Buffer.from(svgIcon);
+
+  // 192x192
+  await sharp(svgBuffer)
+    .resize(192, 192)
+    .png()
+    .toFile(path.join(iconsDir, "icon-192.png"));
+
+  // 512x512
+  await sharp(svgBuffer)
+    .resize(512, 512)
+    .png()
+    .toFile(path.join(iconsDir, "icon-512.png"));
+
+  // Apple touch icon (180x180)
+  await sharp(svgBuffer)
+    .resize(180, 180)
+    .png()
+    .toFile(path.join(publicDir, "apple-touch-icon.png"));
+
+  console.log("✅ Generated PWA icons (192, 512, apple-touch-icon) and favicon.svg successfully!");
+}
+
+generatePngs().catch(console.error);

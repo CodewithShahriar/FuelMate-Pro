@@ -71,17 +71,35 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      {
+        name: "viewport",
+        content:
+          "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
+      },
+      { title: "FuelMate Pro — Smart Motorcycle Tracker" },
+      {
+        name: "description",
+        content: "Smart motorcycle fuel economy, service costs, and trip calculator.",
+      },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "FuelMate Pro" },
+      { name: "mobile-web-app-capable", content: "yes" },
+      { name: "application-name", content: "FuelMate Pro" },
+      { name: "theme-color", content: "#06070a" },
+      { name: "msapplication-TileColor", content: "#06070a" },
+      { property: "og:title", content: "FuelMate Pro" },
+      {
+        property: "og:description",
+        content: "Smart motorcycle fuel economy, service costs, and trip calculator.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       {
         rel: "stylesheet",
         href: appCss,
@@ -96,11 +114,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark h-full bg-[#06070a]">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="h-full bg-[#06070a] text-foreground antialiased overscroll-none overflow-x-hidden">
         {children}
         <Scripts />
       </body>
